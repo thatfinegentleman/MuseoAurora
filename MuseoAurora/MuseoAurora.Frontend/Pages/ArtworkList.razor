@@ -1,0 +1,77 @@
+﻿@page "/artworks"
+@using MuseoAurora.Models
+@using MuseoAurora.Frontend.Services
+@inject ArtworkClient Client
+@inject NavigationManager NavManager
+
+<h3>Catalogo Opere</h3>
+
+<button class="btn btn-primary mb-3" @onclick="GoToCreate">Aggiungi Nuova Opera</button>
+
+@if (artworks == null)
+{
+    <p><em>Caricamento in corso...</em></p>
+}
+else if (!artworks.Any())
+{
+    <p>Nessuna opera presente nel museo.</p>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Titolo</th>
+                <th>Autore</th>
+                <th>Anno</th>
+                <th>Tecnica</th>
+                <th>Azioni</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var artwork in artworks)
+            {
+                <tr>
+                    <td>@artwork.Title</td>
+                    <td>@artwork.Author</td>
+                    <td>@artwork.Year</td>
+                    <td>@artwork.Technique</td>
+                    <td>
+                        <button class="btn btn-warning btn-sm" @onclick="() => GoToEdit(artwork.Id)">Modifica</button>
+                        <button class="btn btn-danger btn-sm" @onclick="() => DeleteArtwork(artwork.Id)">Elimina</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<Artwork>? artworks;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadArtworks();
+    }
+
+    private async Task LoadArtworks()
+    {
+        artworks = await Client.GetArtworksAsync();
+    }
+
+    private void GoToCreate()
+    {
+        NavManager.NavigateTo("/artworks/create");
+    }
+
+    private void GoToEdit(int id)
+    {
+        NavManager.NavigateTo($"/artworks/edit/{id}");
+    }
+
+    private async Task DeleteArtwork(int id)
+    {
+        await Client.DeleteArtworkAsync(id);
+        await LoadArtworks(); 
+    }
+}

@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace MuseoAurora.Models
 {
+    [Table("artworks")]
     public class Artwork
     {
         public int Id { get; set; }

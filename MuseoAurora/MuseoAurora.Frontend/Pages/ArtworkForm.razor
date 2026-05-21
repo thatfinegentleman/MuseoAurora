@@ -1,0 +1,91 @@
+﻿@page "/artworks/create"
+@page "/artworks/edit/{Id:int}"
+@using MuseoAurora.Models
+@using MuseoAurora.Frontend.Services
+@inject ArtworkClient Client
+@inject NavigationManager NavManager
+
+<h3>@(Id.HasValue ? "Modifica Opera" : "Aggiungi Opera")</h3>
+
+@if (artwork == null && Id.HasValue)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <EditForm Model="artwork" OnValidSubmit="HandleSubmit">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <div class="mb-3">
+            <label class="form-label">Titolo</label>
+            <InputText class="form-control" @bind-Value="artwork.Title" />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Autore</label>
+            <InputText class="form-control" @bind-Value="artwork.Author" />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Anno</label>
+            <InputNumber class="form-control" @bind-Value="artwork.Year" />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Tecnica</label>
+            <InputText class="form-control" @bind-Value="artwork.Technique" />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">URL Immagine</label>
+            <InputText class="form-control" @bind-Value="artwork.ImageUrl" />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Descrizione</label>
+            <InputTextArea class="form-control" @bind-Value="artwork.Description" rows="4" />
+        </div>
+
+        <button type="submit" class="btn btn-success">Salva</button>
+        <button type="button" class="btn btn-secondary" @onclick="GoBack">Annulla</button>
+    </EditForm>
+}
+
+@code {
+    [Parameter]
+    public int? Id { get; set; }
+
+    private Artwork artwork = new();
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (Id.HasValue)
+        {
+            var result = await Client.GetArtworkByIdAsync(Id.Value);
+            if (result != null)
+            {
+                artwork = result;
+            }
+        }
+    }
+
+    private async Task HandleSubmit()
+    {
+        if (Id.HasValue)
+        {
+            await Client.UpdateArtworkAsync(artwork);
+        }
+        else
+        {
+            await Client.CreateArtworkAsync(artwork);
+        }
+
+        NavManager.NavigateTo("/artworks");
+    }
+
+    private void GoBack()
+    {
+        NavManager.NavigateTo("/artworks");
+    }
+}
