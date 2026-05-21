@@ -11,7 +11,7 @@ builder.Services.AddDbContext<MuseoAuroraDbContext>(options =>
     options.UseNpgsql(connectionString));
 
 builder.Services.AddOpenApi();
-
+builder.Services.AddScoped<IExhibitionService, ExhibitionService>();
 builder.Services.AddScoped<IArtworkService, ArtworkService>();
 builder.Services.AddControllers();
 
@@ -32,5 +32,6 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 app.UseCors("AllowBlazor");
-app.MapArtworkEndpoints(); 
+app.MapArtworkEndpoints();
+app.MapExhibitionEndpoints();
 app.Run("http://localhost:9000");

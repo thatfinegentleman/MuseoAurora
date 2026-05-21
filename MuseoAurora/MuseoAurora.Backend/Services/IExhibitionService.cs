@@ -4,7 +4,10 @@ namespace MuseoAurora.Backend.Services
 {
     public interface IExhibitionService
     {
-        Task<IEnumerable<Exhibition>> GetAllExhibitionsAsync();
-        Task<bool> CreateExhibitionAsync(Exhibition exhibition);
+        Task<IEnumerable<Exhibition>> GetExhibitionsAsync();
+        Task<Exhibition?> GetExhibitionByIdAsync(int id);
+        Task<Exhibition?> CreateExhibitionAsync(Exhibition exhibition);
+        Task<bool> UpdateExhibitionAsync(Exhibition exhibition);
+        Task<bool> DeleteExhibitionAsync(int id);
     }
 }
