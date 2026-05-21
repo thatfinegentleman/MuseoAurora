@@ -13,6 +13,6 @@ namespace MuseoAurora.Models
         public int GuidedTourId { get; set; }
         public int Quantity { get; set; }
         public decimal TotalPrice { get; set; }
-        public TimeSpan PurchaseDate { get; set; }
+        public DateTime PurchaseDate { get; set; }
     }
 }

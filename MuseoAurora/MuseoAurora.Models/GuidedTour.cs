@@ -4,7 +4,7 @@ using System.Text;
 
 namespace MuseoAurora.Models
 {
-    public class GuidedTours
+    public class GuidedTour
     {
         public int Id { get; set; }
         public int ExhibitionId { get; set; }
