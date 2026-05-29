@@ -1,4 +1,4 @@
-﻿namespace MuseoAurora.Backend.Services
+﻿namespace MuseoAurora.Backend.Services.Interfaces
 {
     public interface IGuidedTourService
     {

@@ -1,4 +1,6 @@
-﻿namespace MuseoAurora.Backend.Services
+﻿using MuseoAurora.Backend.Services.Interfaces;
+
+namespace MuseoAurora.Backend.Services
 {
     public class GuidedTourService : IGuidedTourService
     {

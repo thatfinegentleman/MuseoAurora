@@ -11,5 +11,8 @@ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("http://
 
 builder.Services.AddScoped<ArtworkClient>();
 builder.Services.AddScoped<ExhibitionClient>();
+builder.Services.AddScoped<VisitorClient>();
+builder.Services.AddScoped<TicketClient>();
+builder.Services.AddScoped<ReservationClient>();
 
 await builder.Build().RunAsync();

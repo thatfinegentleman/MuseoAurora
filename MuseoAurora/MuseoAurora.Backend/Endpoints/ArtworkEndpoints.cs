@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http.HttpResults;
-using MuseoAurora.Backend.Services;
+using MuseoAurora.Backend.Services.Interfaces;
 using MuseoAurora.Models;
 
 namespace MuseoAurora.Backend.Endpoints
@@ -70,11 +70,11 @@ namespace MuseoAurora.Backend.Endpoints
         {
             if (await artworkService.DeleteArtworkAsync(id))
             {
-                return TypedResults.NoContent(); // 204 No Content
+                return TypedResults.NoContent(); 
             }
             else
             {
-                return TypedResults.NotFound(); // 404 Not Found
+                return TypedResults.NotFound(); 
             }
         }
     }

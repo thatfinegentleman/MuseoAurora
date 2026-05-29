@@ -1,6 +1,6 @@
 ﻿using MuseoAurora.Models;
 
-namespace MuseoAurora.Backend.Services
+namespace MuseoAurora.Backend.Services.Interfaces
 {
     public interface IArtworkService
     {

@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using MuseoAurora.Backend.Services.Interfaces;
 using MuseoAurora.Models;
 using Npgsql;
 
@@ -21,7 +22,17 @@ namespace MuseoAurora.Backend.Services
             _logger.LogInformation("Loading exhibitions...");
             using var connection = new NpgsqlConnection(_connectionString);
 
-            const string query = """SELECT Id, Title, Description, StartDate, EndDate, ImageUrl, Status FROM Exhibitions;""";
+            const string query = """
+                SELECT 
+                    "Id",
+                    "Title", 
+                    "Description", 
+                    "StartDate", 
+                    "EndDate",
+                    "ImageUrl", 
+                    "Status" 
+                    FROM Exhibitions;
+                """;
 
             try
             {
@@ -39,7 +50,18 @@ namespace MuseoAurora.Backend.Services
             _logger.LogInformation("Looking for exhibition with ID: {Id}", id);
             using var connection = new NpgsqlConnection(_connectionString);
 
-            const string query = """SELECT Id, Title, Description, StartDate, EndDate, ImageUrl, Status FROM Exhibitions WHERE Id = @Id;""";
+            const string query = """
+                SELECT 
+                "Id", 
+                "Title",
+                "Description", 
+                "StartDate", 
+                "EndDate", 
+                "ImageUrl", 
+                "Status" 
+                FROM Exhibitions 
+                WHERE "Id" = @Id;
+                """;
 
             try
             {
@@ -58,9 +80,15 @@ namespace MuseoAurora.Backend.Services
             using var connection = new NpgsqlConnection(_connectionString);
 
             const string query = """
-                INSERT INTO Exhibitions (Title, Description, StartDate, EndDate, ImageUrl, Status)
+                INSERT INTO Exhibitions ( 
+                "Title",
+                "Description", 
+                "StartDate", 
+                "EndDate", 
+                "ImageUrl", 
+                "Status")
                 VALUES (@Title, @Description, @StartDate, @EndDate, @ImageUrl, @Status)
-                RETURNING Id;
+                RETURNING "Id";
                 """;
 
             try
@@ -83,9 +111,14 @@ namespace MuseoAurora.Backend.Services
 
             const string query = """
                 UPDATE Exhibitions
-                SET Title = @Title, Description = @Description, StartDate = @StartDate, 
-                    EndDate = @EndDate, ImageUrl = @ImageUrl, Status = @Status
-                WHERE Id = @Id;
+                SET 
+                "Title" = @Title, 
+                "Description" = @Description, 
+                "StartDate" = @StartDate, 
+                "EndDate" = @EndDate, 
+                "ImageUrl" = @ImageUrl, 
+                "Status" = @Status
+                WHERE "Id" = @Id;
                 """;
 
             try
@@ -105,7 +138,7 @@ namespace MuseoAurora.Backend.Services
             _logger.LogInformation("Deleting exhibition with ID: {Id}", id);
             using var connection = new NpgsqlConnection(_connectionString);
 
-            const string query = """DELETE FROM Exhibitions WHERE Id = @Id;""";
+            const string query = """DELETE FROM Exhibitions WHERE "Id" = @Id;""";
 
             try
             {

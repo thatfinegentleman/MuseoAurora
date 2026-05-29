@@ -26,43 +26,35 @@ namespace MuseoAurora.Backend.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id");
+                        .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Author")
                         .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("author");
+                        .HasColumnType("text");
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("description");
+                        .HasColumnType("text");
 
                     b.Property<int>("ExhibitionId")
-                        .HasColumnType("integer")
-                        .HasColumnName("exhibitionid");
+                        .HasColumnType("integer");
 
                     b.Property<string>("ImageUrl")
                         .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("imageurl");
+                        .HasColumnType("text");
 
                     b.Property<string>("Technique")
                         .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("technique");
+                        .HasColumnType("text");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("title");
+                        .HasColumnType("text");
 
                     b.Property<int>("Year")
-                        .HasColumnType("integer")
-                        .HasColumnName("year");
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -73,38 +65,31 @@ namespace MuseoAurora.Backend.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id");
+                        .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("description");
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("EndDate")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("enddate");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("ImageUrl")
                         .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("imageurl");
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("StartDate")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("startdate");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Status")
                         .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("status");
+                        .HasColumnType("text");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("title");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -115,76 +100,62 @@ namespace MuseoAurora.Backend.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id");
+                        .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("description");
+                        .HasColumnType("text");
 
                     b.Property<int>("DurationMinutes")
-                        .HasColumnType("integer")
-                        .HasColumnName("durationminutes");
+                        .HasColumnType("integer");
 
                     b.Property<int>("ExhibitionId")
-                        .HasColumnType("integer")
-                        .HasColumnName("exhibitionid");
+                        .HasColumnType("integer");
 
                     b.Property<string>("GuideName")
                         .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("guidename");
+                        .HasColumnType("text");
 
                     b.Property<int>("MaxParticipants")
-                        .HasColumnType("integer")
-                        .HasColumnName("maxparticipants");
+                        .HasColumnType("integer");
 
                     b.Property<TimeSpan>("StartTime")
-                        .HasColumnType("interval")
-                        .HasColumnName("starttime");
+                        .HasColumnType("interval");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("title");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
-                    b.ToTable("guidedtours");
+                    b.ToTable("guided_tours");
                 });
 
             modelBuilder.Entity("MuseoAurora.Models.Reservation", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id");
+                        .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<int>("GuidedTourId")
-                        .HasColumnType("integer")
-                        .HasColumnName("guidedtourid");
+                        .HasColumnType("integer");
 
                     b.Property<int>("ParticipantsCount")
-                        .HasColumnType("integer")
-                        .HasColumnName("participantscount");
+                        .HasColumnType("integer");
 
                     b.Property<TimeSpan>("ReservationDate")
-                        .HasColumnType("interval")
-                        .HasColumnName("reservationdate");
+                        .HasColumnType("interval");
 
                     b.Property<string>("Status")
                         .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("status");
+                        .HasColumnType("text");
 
                     b.Property<int>("VisitorId")
-                        .HasColumnType("integer")
-                        .HasColumnName("visitorid");
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -195,42 +166,86 @@ namespace MuseoAurora.Backend.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id");
+                        .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<int>("ExhibitionId")
-                        .HasColumnType("integer")
-                        .HasColumnName("exhibitionid");
+                        .HasColumnType("integer");
 
                     b.Property<int>("GuidedTourId")
-                        .HasColumnType("integer")
-                        .HasColumnName("guidedtourid");
+                        .HasColumnType("integer");
 
                     b.Property<DateTime>("PurchaseDate")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("purchasedate");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<int>("Quantity")
-                        .HasColumnType("integer")
-                        .HasColumnName("quantity");
+                        .HasColumnType("integer");
 
                     b.Property<int>("TicketTypeId")
-                        .HasColumnType("integer")
-                        .HasColumnName("tickettypeid");
+                        .HasColumnType("integer");
 
                     b.Property<decimal>("TotalPrice")
-                        .HasColumnType("numeric")
-                        .HasColumnName("totalprice");
+                        .HasColumnType("numeric");
 
                     b.Property<int>("VisitorId")
-                        .HasColumnType("integer")
-                        .HasColumnName("visitorid");
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
                     b.ToTable("tickets");
+                });
+
+            modelBuilder.Entity("MuseoAurora.Models.TicketType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("numeric");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ticket_types");
+                });
+
+            modelBuilder.Entity("MuseoAurora.Models.Visitor", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("numeric");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("visitors");
                 });
 #pragma warning restore 612, 618
         }

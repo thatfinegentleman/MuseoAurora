@@ -1,0 +1,89 @@
+﻿@page "/tickets/create"
+@page "/tickets/edit/{Id:int}"
+@using MuseoAurora.Models
+@using MuseoAurora.Frontend.Services
+@inject TicketClient Client
+@inject NavigationManager NavManager
+
+<h3>@(Id.HasValue ? "Modifica Dati Vendita" : "Registra Nuova Vendita Biglietto")</h3>
+
+@if (ticket == null && Id.HasValue)
+{
+    <p><em>Caricamento dati...</em></p>
+}
+else
+{
+    <EditForm Model="ticket" OnValidSubmit="HandleSubmit">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label class="form-label">ID Visitatore</label>
+                <InputNumber class="form-control" @bind-Value="ticket.VisitorId" />
+            </div>
+            <div class="col-md-6 mb-3">
+                <label class="form-label">ID Tipo Biglietto</label>
+                <InputNumber class="form-control" @bind-Value="ticket.TicketTypeId" />
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label class="form-label">ID Mostra (opzionale)</label>
+                <InputNumber class="form-control" @bind-Value="ticket.ExhibitionId" />
+            </div>
+            <div class="col-md-6 mb-3">
+                <label class="form-label">ID Visita Guidata (opzionale)</label>
+                <InputNumber class="form-control" @bind-Value="ticket.GuidedTourId" />
+            </div>
+        </div>
+
+        <hr class="my-4" />
+        <h5>Dettagli Transazione</h5>
+
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <label class="form-label">Quantità</label>
+                <InputNumber class="form-control" @bind-Value="ticket.Quantity" />
+            </div>
+            <div class="col-md-4 mb-3">
+                <label class="form-label">Prezzo Totale (€)</label>
+                <InputNumber class="form-control" @bind-Value="ticket.TotalPrice" step="0.01" />
+            </div>
+            <div class="col-md-4 mb-3">
+                <label class="form-label">Data e Ora Acquisto</label>
+                <InputDate Type="InputDateType.DateTimeLocal" class="form-control" @bind-Value="ticket.PurchaseDate" />
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-success mt-3">Salva</button>
+        <button type="button" class="btn btn-secondary mt-3" @onclick="Cancel">Annulla</button>
+    </EditForm>
+}
+
+@code {
+    [Parameter] public int? Id { get; set; }
+    private Ticket ticket = new() { PurchaseDate = DateTime.Now };
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (Id.HasValue)
+        {
+            var res = await Client.GetTicketByIdAsync(Id.Value);
+            if (res != null) ticket = res;
+        }
+    }
+
+    private async Task HandleSubmit()
+    {
+        if (Id.HasValue)
+            await Client.UpdateTicketAsync(ticket);
+        else
+            await Client.CreateTicketAsync(ticket);
+
+        NavManager.NavigateTo("/tickets");
+    }
+
+    private void Cancel() => NavManager.NavigateTo("/tickets");
+}

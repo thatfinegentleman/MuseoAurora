@@ -1,6 +1,7 @@
 ﻿using MuseoAurora.Models;
 using Dapper;
 using Npgsql;
+using MuseoAurora.Backend.Services.Interfaces;
 
 namespace MuseoAurora.Backend.Services
 {
@@ -23,17 +24,15 @@ namespace MuseoAurora.Backend.Services
 
             using var connection = new NpgsqlConnection(_connectionString);
 
-            // Prepariamo la query di inserimento. 
-            // Usiamo RETURNING Id per farci sputare fuori l'id appena creato da Postgres.
             const string query = """
-                INSERT INTO Artworks (
-                    ExhibitionId, 
-                    Title, 
-                    Author, 
-                    Year, 
-                    Description, 
-                    Technique, 
-                    ImageUrl
+                INSERT INTO artworks (
+                    "ExhibitionId", 
+                    "Title", 
+                    "Author", 
+                    "Year", 
+                    "Description", 
+                    "Technique", 
+                    "ImageUrl"
                 )
                 VALUES (
                     @ExhibitionId, 
@@ -44,7 +43,7 @@ namespace MuseoAurora.Backend.Services
                     @Technique, 
                     @ImageUrl
                 )
-                RETURNING Id; 
+                RETURNING "Id"; 
                 """;
 
             try
@@ -69,14 +68,14 @@ namespace MuseoAurora.Backend.Services
             const string query = """
                 UPDATE Artworks
                 SET 
-                    ExhibitionId = @ExhibitionId,
-                    Title = @Title,
-                    Author = @Author,
-                    Year = @Year,
-                    Description = @Description,
-                    Technique = @Technique,
-                    ImageUrl = @ImageUrl
-                WHERE Id = @Id;
+                    "ExhibitionId" = @ExhibitionId,
+                    "Title" = @Title,
+                    "Author" = @Author,
+                    "Year" = @Year,
+                    "Description" = @Description,
+                    "Technique" = @Technique,
+                    "ImageUrl" = @ImageUrl
+                WHERE "Id" = @Id;
                 """;
 
             try
@@ -99,16 +98,16 @@ namespace MuseoAurora.Backend.Services
 
             const string query = """
                 SELECT 
-                    Id, 
-                    ExhibitionId,
-                    Title, 
-                    Author,
-                    Year,
-                    Description, 
-                    Technique,
-                    ImageUrl
+                    "Id", 
+                    "ExhibitionId",
+                    "Title", 
+                    "Author",
+                    "Year",
+                    "Description", 
+                    "Technique",
+                    "ImageUrl"
                 FROM Artworks
-                WHERE Id = @Id;
+                WHERE "Id" = @Id;
                 """;
 
             return await connection.QueryFirstOrDefaultAsync<Artwork>(query, new { Id = id });
@@ -122,14 +121,14 @@ namespace MuseoAurora.Backend.Services
 
             const string query = """
                 SELECT 
-                    Id, 
-                    ExhibitionId,
-                    Title, 
-                    Author,
-                    Year,
-                    Description, 
-                    Technique,
-                    ImageUrl
+                    "Id", 
+                    "ExhibitionId",
+                    "Title", 
+                    "Author",
+                    "Year",
+                    "Description", 
+                    "Technique",
+                    "ImageUrl"
                 FROM Artworks;
                 """;
 
@@ -144,7 +143,7 @@ namespace MuseoAurora.Backend.Services
 
             const string query = """
                 DELETE FROM Artworks
-                WHERE Id = @Id;
+                WHERE "Id" = @Id;
                 """;
 
             try

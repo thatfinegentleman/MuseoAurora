@@ -20,9 +20,4 @@
     <ProjectReference Include="..\MuseoAurora.Models\MuseoAurora.Models.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Migrations\" />
-    <Folder Include="Services\" />
-  </ItemGroup>
-
 </Project>

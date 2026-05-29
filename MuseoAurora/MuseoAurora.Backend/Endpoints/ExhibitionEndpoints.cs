@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http.HttpResults;
-using MuseoAurora.Backend.Services;
+using MuseoAurora.Backend.Services.Interfaces;
 using MuseoAurora.Models;
 
 namespace MuseoAurora.Backend.Endpoints

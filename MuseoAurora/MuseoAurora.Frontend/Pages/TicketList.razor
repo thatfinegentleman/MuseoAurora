@@ -1,0 +1,66 @@
+﻿@page "/tickets"
+@using MuseoAurora.Models
+@using MuseoAurora.Frontend.Services
+@inject TicketClient Client
+@inject NavigationManager NavManager
+
+<h3>Registro Vendita Biglietti</h3>
+<button class="btn btn-primary mb-3" @onclick="GoToCreate">Nuova Vendita</button>
+
+@if (tickets == null)
+{
+    <p><em>Caricamento...</em></p>
+}
+else if (!tickets.Any())
+{
+    <p>Nessun biglietto registrato.</p>
+}
+else
+{
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>ID Visitatore</th>
+                <th>Quantità</th>
+                <th>Prezzo Totale (€)</th>
+                <th>Data Acquisto</th>
+                <th>Azioni</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var t in tickets)
+            {
+                <tr>
+                    <td>@t.Id</td>
+                    <td>@t.VisitorId</td>
+                    <td>@t.Quantity</td>
+                    <td>@t.TotalPrice.ToString("0.00")</td>
+                    <td>@t.PurchaseDate.ToString("dd/MM/yyyy HH:mm")</td>
+                    <td>
+                        <button class="btn btn-warning btn-sm" @onclick="() => GoToEdit(t.Id)">Modifica</button>
+                        <button class="btn btn-danger btn-sm" @onclick="() => Delete(t.Id)">Elimina</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<Ticket>? tickets;
+
+    protected override async Task OnInitializedAsync() => await LoadData();
+
+    private async Task LoadData() => tickets = await Client.GetTicketsAsync();
+
+    private void GoToCreate() => NavManager.NavigateTo("/tickets/create");
+
+    private void GoToEdit(int id) => NavManager.NavigateTo($"/tickets/edit/{id}");
+
+    private async Task Delete(int id)
+    {
+        await Client.DeleteTicketAsync(id);
+        await LoadData();
+    }
+}

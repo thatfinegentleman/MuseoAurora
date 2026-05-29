@@ -2,17 +2,23 @@ using Microsoft.EntityFrameworkCore;
 using MuseoAurora.Backend.Context;
 using MuseoAurora.Backend.Endpoints;
 using MuseoAurora.Backend.Services;
+using MuseoAurora.Backend.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
 var connectionString = builder.Configuration.GetConnectionString("AuroraDB");
 
 builder.Services.AddDbContext<MuseoAuroraDbContext>(options =>
-    options.UseNpgsql(connectionString));
+{
+    options.UseNpgsql(connectionString);
+});
 
 builder.Services.AddOpenApi();
 builder.Services.AddScoped<IExhibitionService, ExhibitionService>();
 builder.Services.AddScoped<IArtworkService, ArtworkService>();
+builder.Services.AddScoped<IVisitorService, VisitorService>(); 
+builder.Services.AddScoped<ITicketService, TicketService>(); 
+builder.Services.AddScoped<IReservationService, ReservationService>(); 
 builder.Services.AddControllers();
 
 builder.Services.AddCors(options =>
@@ -34,4 +40,7 @@ if (app.Environment.IsDevelopment())
 app.UseCors("AllowBlazor");
 app.MapArtworkEndpoints();
 app.MapExhibitionEndpoints();
+app.MapVisitorEndpoints();
+app.MapTicketEndpoints();
+app.MapReservationEndpoints();
 app.Run("http://localhost:9000");

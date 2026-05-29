@@ -14,10 +14,17 @@ namespace MuseoAurora.Backend.Context
         public DbSet<GuidedTour> GuidedTours { get; set; }
         public DbSet<Reservation> Reservations { get; set; }
         public DbSet<Ticket> Tickets { get; set; }
+        public DbSet<Visitor> Visitors { get; set; }
+        public DbSet<TicketType> TicketTypes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            base.OnConfiguring(optionsBuilder);
         }
     }
 }
