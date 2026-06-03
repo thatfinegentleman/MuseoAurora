@@ -1,5 +1,65 @@
-﻿<h3>TicketForm</h3>
+﻿@page "/tickets/create"
+@page "/tickets/edit/{Id:int}"
 
-@code {
+<h3>@(Id.HasValue ? "Edit Ticket" : "Create Ticket")</h3>
 
-}
+<EditForm Model="ticket" OnValidSubmit="HandleSubmit">
+    <DataAnnotationsValidator />
+
+    <div class="mb-3">
+        <label>Visitor</label>
+        <InputSelect class="form-select" @bind-Value="ticket.Visitor.Id">
+            <option value="0">Select Visitor...</option>
+            @foreach (var v in availableVisitors)
+            {
+                <option value="@v.Id">@v.LastName @v.FirstName</option>
+            }
+        </InputSelect>
+    </div>
+
+    <div class="mb-3">
+        <label>Ticket Type</label>
+        <InputSelect class="form-select" @bind-Value="ticket.TicketType.Id">
+            <option value="0">Select Ticket Type...</option>
+            @foreach (var t in availableTicketTypes)
+            {
+                <option value="@t.Id">@t.Name</option>
+            }
+        </InputSelect>
+    </div>
+
+    <div class="mb-3">
+        <label>Exhibition (Optional)</label>
+        <InputSelect class="form-select" @bind-Value="ticket.Exhibition.Id">
+            <option value="0">None...</option>
+            @foreach (var e in availableExhibitions)
+            {
+                <option value="@e.Id">@e.Title</option>
+            }
+        </InputSelect>
+    </div>
+
+    <div class="mb-3">
+        <label>Guided Tour (Optional)</label>
+        <InputSelect class="form-select" @bind-Value="ticket.GuidedTour.Id">
+            <option value="0">None...</option>
+            @foreach (var gt in availableTours)
+            {
+                <option value="@gt.Id">@gt.Title</option>
+            }
+        </InputSelect>
+    </div>
+
+    <div class="mb-3">
+        <label>Quantity</label>
+        <InputNumber class="form-control" @bind-Value="ticket.Quantity" />
+    </div>
+
+    <div class="mb-3">
+        <label>Total Price</label>
+        <InputNumber class="form-control" @bind-Value="ticket.TotalPrice" />
+    </div>
+
+    <button type="submit" class="btn btn-success">Save</button>
+    <a href="/tickets" class="btn btn-secondary">Cancel</a>
+</EditForm>

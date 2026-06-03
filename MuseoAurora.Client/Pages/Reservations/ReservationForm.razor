@@ -1,5 +1,48 @@
-﻿<h3>ReservationForm</h3>
+﻿@page "/reservations/create"
+@page "/reservations/edit/{Id:int}"
 
-@code {
+<h3>@(Id.HasValue ? "Edit Reservation" : "Create Reservation")</h3>
 
-}
+<EditForm Model="reservation" OnValidSubmit="HandleSubmit">
+    <DataAnnotationsValidator />
+
+    <div class="mb-3">
+        <label>Visitor</label>
+        <InputSelect class="form-select" @bind-Value="reservation.Visitor.Id">
+            <option value="0">Select Visitor...</option>
+            @foreach (var v in availableVisitors)
+            {
+                <option value="@v.Id">@v.LastName @v.FirstName</option>
+            }
+        </InputSelect>
+    </div>
+
+    <div class="mb-3">
+        <label>Guided Tour</label>
+        <InputSelect class="form-select" @bind-Value="reservation.GuidedTour.Id">
+            <option value="0">Select Guided Tour...</option>
+            @foreach (var gt in availableTours)
+            {
+                <option value="@gt.Id">@gt.Title</option>
+            }
+        </InputSelect>
+    </div>
+
+    <div class="mb-3">
+        <label>Participants Count</label>
+        <InputNumber class="form-control" @bind-Value="reservation.ParticipantsCount" />
+    </div>
+
+    <div class="mb-3">
+        <label>Reservation Date</label>
+        <InputDate Type="InputDateType.DateTimeLocal" class="form-control" @bind-Value="reservation.ReservationDate" />
+    </div>
+
+    <div class="mb-3">
+        <label>Status</label>
+        <InputText class="form-control" @bind-Value="reservation.Status" />
+    </div>
+
+    <button type="submit" class="btn btn-success">Save</button>
+    <a href="/reservations" class="btn btn-secondary">Cancel</a>
+</EditForm>

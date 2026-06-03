@@ -1,5 +1,21 @@
-﻿<h3>TicketTypeForm</h3>
+﻿@page "/tickettypes/create"
+@page "/tickettypes/edit/{Id:int}"
 
-@code {
+<h3>@(Id.HasValue ? "Edit Ticket Type" : "Create Ticket Type")</h3>
 
-}
+<EditForm Model="ticketType" OnValidSubmit="HandleSubmit">
+    <DataAnnotationsValidator />
+
+    <div class="mb-3">
+        <label>Name</label>
+        <InputText class="form-control" @bind-Value="ticketType.Name" />
+    </div>
+
+    <div class="mb-3">
+        <label>Price</label>
+        <InputNumber class="form-control" @bind-Value="ticketType.Price" />
+    </div>
+
+    <button type="submit" class="btn btn-success">Save</button>
+    <a href="/tickettypes" class="btn btn-secondary">Cancel</a>
+</EditForm>
