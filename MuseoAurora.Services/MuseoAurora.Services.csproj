@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Models\MuseoAurora.Models.csproj" />
+    <ProjectReference Include="..\MuseoAurora.Models\MuseoAurora.Models.csproj" />
   </ItemGroup>
 
 </Project>

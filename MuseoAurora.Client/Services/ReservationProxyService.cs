@@ -24,6 +24,12 @@ namespace MuseoAurora.Client.Services
             return response.IsSuccessStatusCode;
         }
 
+        public async Task<bool> UpdateAsync(Reservation item)
+        {
+            var response = await _http.PutAsJsonAsync("api/reservations", item);
+            return response.IsSuccessStatusCode;
+        }
+
         public async Task<bool> DeleteAsync(int id)
         {
             var response = await _http.DeleteAsync($"api/reservations/{id}");
