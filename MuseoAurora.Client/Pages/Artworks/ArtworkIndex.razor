@@ -1,5 +1,36 @@
-﻿<h3>ArtworkIndex</h3>
+﻿@page "/artworks"
 
-@code {
+<h3>Artworks</h3>
 
+<a href="/artworks/create" class="btn btn-primary mb-3">Add Artwork</a>
+
+@if (artworks == null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Year</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in artworks)
+            {
+                <tr>
+                    <td>@item.Title</td>
+                    <td>@item.Author</td>
+                    <td>@item.Year</td>
+                    <td>
+                        <a href="/artworks/edit/@item.Id" class="btn btn-sm btn-warning">Edit</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 }

@@ -1,5 +1,38 @@
-﻿<h3>ExhibitionIndex</h3>
+﻿@page "/exhibitions"
 
-@code {
+<h3>Exhibitions</h3>
 
+<a href="/exhibitions/create" class="btn btn-primary mb-3">Add Exhibition</a>
+
+@if (exhibitions == null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in exhibitions)
+            {
+                <tr>
+                    <td>@item.Title</td>
+                    <td>@item.StartDate?.ToShortDateString()</td>
+                    <td>@item.EndDate?.ToShortDateString()</td>
+                    <td>@item.Status</td>
+                    <td>
+                        <a href="/exhibitions/edit/@item.Id" class="btn btn-sm btn-warning">Edit</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 }

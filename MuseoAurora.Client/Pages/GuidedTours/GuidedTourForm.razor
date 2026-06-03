@@ -1,5 +1,47 @@
-﻿<h3>GuidedTourForm</h3>
+﻿@page "/guidedtours/create"
+@page "/guidedtours/edit/{Id:int}"
 
-@code {
+<h3>@(Id.HasValue ? "Edit Guided Tour" : "Create Guided Tour")</h3>
 
-}
+<EditForm Model="tour" OnValidSubmit="HandleSubmit">
+    <DataAnnotationsValidator />
+
+    <div class="mb-3">
+        <label>Exhibition</label>
+        <InputSelect class="form-select" @bind-Value="tour.Exhibition.Id">
+            <option value="0">Select Exhibition...</option>
+            @foreach (var exhibition in availableExhibitions)
+            {
+                <option value="@exhibition.Id">@exhibition.Title</option>
+            }
+        </InputSelect>
+    </div>
+
+    <div class="mb-3">
+        <label>Title</label>
+        <InputText class="form-control" @bind-Value="tour.Title" />
+    </div>
+
+    <div class="mb-3">
+        <label>Start Time</label>
+        <InputDate Type="InputDateType.DateTimeLocal" class="form-control" @bind-Value="tour.StartTime" />
+    </div>
+
+    <div class="mb-3">
+        <label>Duration (Minutes)</label>
+        <InputNumber class="form-control" @bind-Value="tour.DurationMinutes" />
+    </div>
+
+    <div class="mb-3">
+        <label>Guide Name</label>
+        <InputText class="form-control" @bind-Value="tour.GuideName" />
+    </div>
+
+    <div class="mb-3">
+        <label>Max Participants</label>
+        <InputNumber class="form-control" @bind-Value="tour.MaxParticipants" />
+    </div>
+
+    <button type="submit" class="btn btn-success">Save</button>
+    <a href="/guidedtours" class="btn btn-secondary">Cancel</a>
+</EditForm>

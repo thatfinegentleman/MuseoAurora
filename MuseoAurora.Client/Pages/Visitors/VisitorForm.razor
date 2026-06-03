@@ -1,5 +1,26 @@
-﻿<h3>VisitorForm</h3>
+﻿@page "/visitors/create"
+@page "/visitors/edit/{Id:int}"
 
-@code {
+<h3>@(Id.HasValue ? "Edit Visitor" : "Create Visitor")</h3>
 
-}
+<EditForm Model="visitor" OnValidSubmit="HandleSubmit">
+    <DataAnnotationsValidator />
+
+    <div class="mb-3">
+        <label>First Name</label>
+        <InputText class="form-control" @bind-Value="visitor.FirstName" />
+    </div>
+
+    <div class="mb-3">
+        <label>Last Name</label>
+        <InputText class="form-control" @bind-Value="visitor.LastName" />
+    </div>
+
+    <div class="mb-3">
+        <label>Email</label>
+        <InputText class="form-control" @bind-Value="visitor.Email" />
+    </div>
+
+    <button type="submit" class="btn btn-success">Save</button>
+    <a href="/visitors" class="btn btn-secondary">Cancel</a>
+</EditForm>

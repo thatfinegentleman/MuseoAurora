@@ -1,5 +1,36 @@
-﻿<h3>GuidedTourIndex</h3>
+﻿@page "/guidedtours"
 
-@code {
+<h3>Guided Tours</h3>
 
+<a href="/guidedtours/create" class="btn btn-primary mb-3">Add Guided Tour</a>
+
+@if (tours == null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Start Time</th>
+                <th>Guide Name</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in tours)
+            {
+                <tr>
+                    <td>@item.Title</td>
+                    <td>@item.StartTime</td>
+                    <td>@item.GuideName</td>
+                    <td>
+                        <a href="/guidedtours/edit/@item.Id" class="btn btn-sm btn-warning">Edit</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 }

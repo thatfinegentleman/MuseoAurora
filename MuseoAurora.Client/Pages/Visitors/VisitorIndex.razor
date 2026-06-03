@@ -1,5 +1,36 @@
-﻿<h3>VisitorsIndex</h3>
+﻿@page "/visitors"
 
-@code {
+<h3>Visitors</h3>
 
+<a href="/visitors/create" class="btn btn-primary mb-3">Add Visitor</a>
+
+@if (visitors == null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in visitors)
+            {
+                <tr>
+                    <td>@item.FirstName</td>
+                    <td>@item.LastName</td>
+                    <td>@item.Email</td>
+                    <td>
+                        <a href="/visitors/edit/@item.Id" class="btn btn-sm btn-warning">Edit</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 }
