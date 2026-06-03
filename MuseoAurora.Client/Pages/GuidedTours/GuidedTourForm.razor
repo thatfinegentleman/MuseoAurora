@@ -8,8 +8,7 @@
 
     <div class="mb-3">
         <label>Exhibition</label>
-        <InputSelect 
-            
+        <InputSelect class="input-brand"
             @bind-Value="tour.Exhibition.Id">
             <option value="0">Select Exhibition...</option>
             @foreach (var exhibition in availableExhibitions)
