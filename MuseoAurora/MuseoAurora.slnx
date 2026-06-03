@@ -1,8 +1,0 @@
-<Solution>
-  <Folder Name="/Solution Items/">
-    <File Path="README.md" />
-  </Folder>
-  <Project Path="MuseoAurora.Backend/MuseoAurora.Backend.csproj" />
-  <Project Path="MuseoAurora.Frontend/MuseoAurora.Frontend.csproj" />
-  <Project Path="MuseoAurora.Models/MuseoAurora.Models.csproj" />
-</Solution>

@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="../Models/MuseoAurora.Models.csproj" />
+  <Project Path="../MuseoAurora.Services/MuseoAurora.Services.csproj" />
+  <Project Path="MuseoAurora.Client/MuseoAurora.Client.csproj" />
+  <Project Path="MuseoAurora/MuseoAurora.csproj" />
+</Solution>

@@ -1,6 +1,0 @@
-@MuseoAurora.Backend_HostAddress = http://localhost:5228
-
-GET {{MuseoAurora.Backend_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
