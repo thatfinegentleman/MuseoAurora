@@ -8,19 +8,19 @@
 
     <div class="mb-3">
         <label>First Name</label>
-        <InputText class="form-control" @bind-Value="visitor.FirstName" />
+        <InputText class="input-brand" @bind-Value="visitor.FirstName" />
     </div>
 
     <div class="mb-3">
         <label>Last Name</label>
-        <InputText class="form-control" @bind-Value="visitor.LastName" />
+        <InputText class="input-brand" @bind-Value="visitor.LastName" />
     </div>
 
     <div class="mb-3">
         <label>Email</label>
-        <InputText class="form-control" @bind-Value="visitor.Email" />
+        <InputText class="input-brand" @bind-Value="visitor.Email" />
     </div>
 
-    <button type="submit" class="btn btn-success">Save</button>
-    <a href="/visitors" class="btn btn-secondary">Cancel</a>
+    <button type="submit" class="btn-brand btn-save">Save</button>
+    <a href="/visitors" class="btn-brand btn-cancel">Cancel</a>
 </EditForm>

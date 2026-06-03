@@ -58,3 +58,180 @@ h1:focus {
 .form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
     text-align: start;
 }
+
+
+
+
+/*-----------------------------------------------------------------------------------------------------*/
+/* variabili colore */
+:root {
+    --brand-terracotta: #c2410c;
+    --brand-beige: #f4ebe1;
+    --brand-green: #8d9033;
+    --brand-dark: #2a2a2a;
+    --brand-light: #ffffff;
+    --font-family-base: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+body {
+    background-color: var(--brand-beige);
+    color: var(--brand-dark);
+    font-family: var(--font-family-base);
+    margin: 0;
+}
+
+/* layout principale */
+.page {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex-grow: 1;
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* navbar orizzontale in terracotta */
+.navbar-brand-container {
+    background-color: var(--brand-terracotta);
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--brand-light);
+    text-decoration: none;
+    letter-spacing: 0.05rem;
+}
+
+/* menu di navigazione e animazioni */
+.nav-horizontal {
+    display: flex;
+    flex-direction: row;
+    gap: 1.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.nav-item {
+    margin: 0;
+}
+
+.nav-link {
+    color: var(--brand-beige);
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: 500;
+    padding: 0.5rem 0;
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+    .nav-link:hover, .nav-link.active {
+        color: var(--brand-light);
+    }
+
+    /* linea decorativa on hover */
+    .nav-link::after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: 0;
+        left: 0;
+        background-color: var(--brand-light);
+        transition: width 0.3s ease;
+    }
+
+    .nav-link:hover::after, .nav-link.active::after {
+        width: 100%;
+    }
+
+/* tabelle */
+.table-brand {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: var(--brand-light);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+    .table-brand th, .table-brand td {
+        padding: 1rem;
+        text-align: left;
+        border-bottom: 1px solid #e0e0e0;
+    }
+
+    .table-brand th {
+        background-color: #eaddcd;
+        color: var(--brand-dark);
+        font-weight: bold;
+    }
+
+/* bottoni */
+.btn-brand {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    font-weight: bold;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+    transition: opacity 0.2s;
+}
+
+    .btn-brand:hover {
+        opacity: 0.8;
+    }
+
+.btn-primary, .btn-save {
+    background-color: var(--brand-green);
+    color: var(--brand-light);
+}
+
+.btn-edit {
+    background-color: var(--brand-terracotta);
+    color: var(--brand-light);
+    padding: 0.25rem 0.75rem;
+    font-size: 0.9rem;
+}
+
+.btn-cancel {
+    background-color: transparent;
+    color: var(--brand-dark);
+    border: 1px solid var(--brand-dark);
+}
+
+/* form */
+.mb-3 {
+    margin-bottom: 1.5rem;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+.input-brand {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ccc;
+    background-color: var(--brand-light);
+    color: var(--brand-dark);
+    font-family: var(--font-family-base);
+}
+
+    .input-brand:focus {
+        outline: none;
+        border-color: var(--brand-terracotta);
+    }

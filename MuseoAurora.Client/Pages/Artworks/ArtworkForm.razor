@@ -8,7 +8,7 @@
 
     <div class="mb-3">
         <label>Exhibition</label>
-        <InputSelect class="form-select" @bind-Value="artwork.Exhibition.Id">
+        <InputSelect class="input-brand" @bind-Value="artwork.Exhibition.Id">
             <option value="0">Select Exhibition...</option>
             @foreach (var exhibition in availableExhibitions)
             {
@@ -19,19 +19,19 @@
 
     <div class="mb-3">
         <label>Title</label>
-        <InputText class="form-control" @bind-Value="artwork.Title" />
+        <InputText class="input-brand" @bind-Value="artwork.Title" />
     </div>
 
     <div class="mb-3">
         <label>Author</label>
-        <InputText class="form-control" @bind-Value="artwork.Author" />
+        <InputText class="input-brand" @bind-Value="artwork.Author" />
     </div>
 
     <div class="mb-3">
         <label>Year</label>
-        <InputNumber class="form-control" @bind-Value="artwork.Year" />
+        <InputNumber class="input-brand" @bind-Value="artwork.Year" />
     </div>
 
-    <button type="submit" class="btn btn-success">Save</button>
-    <a href="/artworks" class="btn btn-secondary">Cancel</a>
+    <button type="submit" class="btn-brand btn-save">Save</button>
+    <a href="/artworks" class="btn-brand btn-cancel">Cancel</a>
 </EditForm>

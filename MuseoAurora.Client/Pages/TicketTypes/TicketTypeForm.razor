@@ -8,14 +8,16 @@
 
     <div class="mb-3">
         <label>Name</label>
-        <InputText class="form-control" @bind-Value="ticketType.Name" />
+        <InputText class="input-brand" @bind-Value="ticketType.Name" />
     </div>
 
     <div class="mb-3">
         <label>Price</label>
-        <InputNumber class="form-control" @bind-Value="ticketType.Price" />
+        <InputNumber class="input-brand" @bind-Value="ticketType.Price" />
     </div>
 
-    <button type="submit" class="btn btn-success">Save</button>
-    <a href="/tickettypes" class="btn btn-secondary">Cancel</a>
+    <button type="submit" 
+        >Save</button>
+    <a href="/tickettypes" 
+    >Cancel</a>
 </EditForm>

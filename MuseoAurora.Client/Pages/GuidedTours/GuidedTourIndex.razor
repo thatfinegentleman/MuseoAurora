@@ -2,7 +2,7 @@
 
 <h3>Guided Tours</h3>
 
-<a href="/guidedtours/create" class="btn btn-primary mb-3">Add Guided Tour</a>
+<a href="/guidedtours/create" class="btn-brand btn-primary mb-3">Add Guided Tour</a>
 
 @if (tours == null)
 {
@@ -10,7 +10,7 @@
 }
 else
 {
-    <table class="table">
+    <table class="table-brand">
         <thead>
             <tr>
                 <th>Title</th>
@@ -27,7 +27,7 @@ else
                     <td>@item.StartTime</td>
                     <td>@item.GuideName</td>
                     <td>
-                        <a href="/guidedtours/edit/@item.Id" class="btn btn-sm btn-warning">Edit</a>
+                        <a href="/guidedtours/edit/@item.Id" class="btn-brand btn-edit">Edit</a>
                     </td>
                 </tr>
             }

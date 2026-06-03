@@ -8,29 +8,30 @@
 
     <div class="mb-3">
         <label>Title</label>
-        <InputText class="form-control" @bind-Value="exhibition.Title" />
+        <InputText class="input-brand" @bind-Value="exhibition.Title" />
     </div>
 
     <div class="mb-3">
         <label>Description</label>
-        <InputTextArea class="form-control" @bind-Value="exhibition.Description" />
+        <InputTextArea class="input-brand" @bind-Value="exhibition.Description" />
     </div>
 
     <div class="mb-3">
         <label>Start Date</label>
-        <InputDate class="form-control" @bind-Value="exhibition.StartDate" />
+        <InputDate class="input-brand" @bind-Value="exhibition.StartDate" />
     </div>
 
     <div class="mb-3">
         <label>End Date</label>
-        <InputDate class="form-control" @bind-Value="exhibition.EndDate" />
+        <InputDate class="input-brand" @bind-Value="exhibition.EndDate" />
     </div>
 
     <div class="mb-3">
         <label>Status</label>
-        <InputText class="form-control" @bind-Value="exhibition.Status" />
+        <InputText class="input-brand" @bind-Value="exhibition.Status" />
     </div>
 
-    <button type="submit" class="btn btn-success">Save</button>
-    <a href="/exhibitions" class="btn btn-secondary">Cancel</a>
+    <button type="submit" 
+        >Save</button>
+    <a href="/exhibitions" class="btn-brand btn-cancel">Cancel</a>
 </EditForm>

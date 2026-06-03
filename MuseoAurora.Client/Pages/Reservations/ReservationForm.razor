@@ -8,7 +8,7 @@
 
     <div class="mb-3">
         <label>Visitor</label>
-        <InputSelect class="form-select" @bind-Value="reservation.Visitor.Id">
+        <InputSelect class="input-brand" @bind-Value="reservation.Visitor.Id">
             <option value="0">Select Visitor...</option>
             @foreach (var v in availableVisitors)
             {
@@ -19,7 +19,7 @@
 
     <div class="mb-3">
         <label>Guided Tour</label>
-        <InputSelect class="form-select" @bind-Value="reservation.GuidedTour.Id">
+        <InputSelect class="input-brand" @bind-Value="reservation.GuidedTour.Id">
             <option value="0">Select Guided Tour...</option>
             @foreach (var gt in availableTours)
             {
@@ -30,19 +30,19 @@
 
     <div class="mb-3">
         <label>Participants Count</label>
-        <InputNumber class="form-control" @bind-Value="reservation.ParticipantsCount" />
+        <InputNumber class="input-brand" @bind-Value="reservation.ParticipantsCount" />
     </div>
 
     <div class="mb-3">
         <label>Reservation Date</label>
-        <InputDate Type="InputDateType.DateTimeLocal" class="form-control" @bind-Value="reservation.ReservationDate" />
+        <InputDate Type="InputDateType.DateTimeLocal" class="input-brand" @bind-Value="reservation.ReservationDate" />
     </div>
 
     <div class="mb-3">
         <label>Status</label>
-        <InputText class="form-control" @bind-Value="reservation.Status" />
+        <InputText class="input-brand" @bind-Value="reservation.Status" />
     </div>
 
-    <button type="submit" class="btn btn-success">Save</button>
-    <a href="/reservations" class="btn btn-secondary">Cancel</a>
+    <button type="submit" class="btn-brand btn-save">Save</button>
+    <a href="/reservations" class="btn-brand btn-cancel">Cancel</a>
 </EditForm>

@@ -2,7 +2,7 @@
 
 <h3>Artworks</h3>
 
-<a href="/artworks/create" class="btn btn-primary mb-3">Add Artwork</a>
+<a href="/artworks/create" class="btn-brand btn-primary mb-3">Add Artwork</a>
 
 @if (artworks == null)
 {
@@ -10,7 +10,7 @@
 }
 else
 {
-    <table class="table">
+    <table class="table-brand">
         <thead>
             <tr>
                 <th>Title</th>
@@ -27,7 +27,7 @@ else
                     <td>@item.Author</td>
                     <td>@item.Year</td>
                     <td>
-                        <a href="/artworks/edit/@item.Id" class="btn btn-sm btn-warning">Edit</a>
+                        <a href="/artworks/edit/@item.Id" class="btn-brand btn-edit">Edit</a>
                     </td>
                 </tr>
             }

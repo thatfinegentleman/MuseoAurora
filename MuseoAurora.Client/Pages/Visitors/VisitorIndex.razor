@@ -2,7 +2,7 @@
 
 <h3>Visitors</h3>
 
-<a href="/visitors/create" class="btn btn-primary mb-3">Add Visitor</a>
+<a href="/visitors/create" class="btn-brand btn-primary mb-3">Add Visitor</a>
 
 @if (visitors == null)
 {
@@ -10,7 +10,7 @@
 }
 else
 {
-    <table class="table">
+    <table class="table-brand">
         <thead>
             <tr>
                 <th>First Name</th>
@@ -27,7 +27,7 @@ else
                     <td>@item.LastName</td>
                     <td>@item.Email</td>
                     <td>
-                        <a href="/visitors/edit/@item.Id" class="btn btn-sm btn-warning">Edit</a>
+                        <a href="/visitors/edit/@item.Id" class="btn-brand btn-edit">Edit</a>
                     </td>
                 </tr>
             }

@@ -2,7 +2,7 @@
 
 <h3>Tickets</h3>
 
-<a href="/tickets/create" class="btn btn-primary mb-3">Add Ticket</a>
+<a href="/tickets/create" class="btn-brand btn-primary mb-3">Add Ticket</a>
 
 @if (tickets == null)
 {
@@ -10,7 +10,7 @@
 }
 else
 {
-    <table class="table">
+    <table class="table-brand">
         <thead>
             <tr>
                 <th>Purchase Date</th>
@@ -27,7 +27,7 @@ else
                     <td>@item.Quantity</td>
                     <td>@item.TotalPrice</td>
                     <td>
-                        <a href="/tickets/edit/@item.Id" class="btn btn-sm btn-warning">Edit</a>
+                        <a href="/tickets/edit/@item.Id" class="btn-brand btn-edit">Edit</a>
                     </td>
                 </tr>
             }
