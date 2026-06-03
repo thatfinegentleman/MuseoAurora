@@ -21,7 +21,9 @@ namespace MuseoAurora.Services
         {
             using var connection = new NpgsqlConnection(_connectionString);
             const string query = @"
-                SELECT r.*, v.*, gt.*
+                SELECT r.id, r.participants_count as ParticipantsCount, r.reservation_date as ReservationDate, r.status, r.visitor_id, r.guided_tour_id,
+                       v.id, v.first_name as FirstName, v.last_name as LastName, v.email,
+                       gt.id, gt.title, gt.description, gt.start_time as StartTime, gt.duration_minutes as DurationMinutes, gt.guide_name as GuideName, gt.max_participants as MaxParticipants, gt.exhibition_id
                 FROM reservations r
                 INNER JOIN visitors v ON r.visitor_id = v.id
                 INNER JOIN guided_tours gt ON r.guided_tour_id = gt.id";
@@ -41,7 +43,14 @@ namespace MuseoAurora.Services
         public async Task<Reservation?> GetReservationByIdAsync(int id)
         {
             using var connection = new NpgsqlConnection(_connectionString);
-            return await connection.QueryFirstOrDefaultAsync<Reservation>("SELECT * FROM reservations WHERE id = @Id", new { Id = id });
+            const string query = @"
+                SELECT r.id, r.participants_count as ParticipantsCount, r.reservation_date as ReservationDate, r.status, r.visitor_id, r.guided_tour_id,
+                       v.id, v.first_name as FirstName, v.last_name as LastName, v.email,
+                       gt.id, gt.title, gt.description, gt.start_time as StartTime, gt.duration_minutes as DurationMinutes, gt.guide_name as GuideName, gt.max_participants as MaxParticpants, gt.exhibition_id
+                FROM reservations r
+                INNER JOIN visitors v ON r.visitor_id = v.id
+                INNER JOIN guided_tours gt ON r.guided_tour_id = gt.id";
+            return await connection.QueryFirstOrDefaultAsync<Reservation>(query, new { Id = id });
         }
 
         public async Task<InsertResult<Reservation>> CreateReservationAsync(Reservation reservation)
@@ -76,24 +85,31 @@ namespace MuseoAurora.Services
 
         public async Task<bool> UpdateReservationAsync(Reservation reservation)
         {
-            using var connection = new NpgsqlConnection(_connectionString);
-            const string query = @"
-                UPDATE reservations 
-                SET participants_count = @ParticipantsCount, reservation_date = @ReservationDate, 
-                    status = @Status, visitor_id = @VisitorId, guided_tour_id = @GuidedTourId
-                WHERE id = @Id";
-
-            var parameters = new
+            var status = true;
+            try
             {
-                reservation.Id,
-                reservation.ParticipantsCount,
-                reservation.ReservationDate,
-                reservation.Status,
-                VisitorId = reservation.Visitor?.Id,
-                GuidedTourId = reservation.GuidedTour?.Id
-            };
-
-            return await connection.ExecuteAsync(query, parameters) > 0;
+                using var connection = new NpgsqlConnection(_connectionString);
+                const string query = @"
+                    UPDATE reservations 
+                    SET participants_count = @ParticipantsCount, reservation_date = @ReservationDate, 
+                        status = @Status, visitor_id = @VisitorId, guided_tour_id = @GuidedTourId
+                    WHERE id = @Id";
+                var parameters = new
+                {
+                    reservation.Id,
+                    reservation.ParticipantsCount,
+                    reservation.ReservationDate,
+                    reservation.Status,
+                    VisitorId = reservation.Visitor?.Id,
+                    GuidedTourId = reservation.GuidedTour?.Id
+                };
+                status = await connection.ExecuteAsync(query, parameters) > 0;
+            }
+            catch (NpgsqlException ex)
+            {
+                return false;
+            }
+            return status;
         }
 
         public async Task<bool> DeleteReservationAsync(int id)

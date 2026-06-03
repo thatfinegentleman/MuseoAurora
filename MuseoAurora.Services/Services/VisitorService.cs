@@ -20,13 +20,20 @@ namespace MuseoAurora.Services
         public async Task<IEnumerable<Visitor>> GetVisitorsAsync()
         {
             using var connection = new NpgsqlConnection(_connectionString);
-            return await connection.QueryAsync<Visitor>("SELECT * FROM visitors");
+            return await connection.QueryAsync<Visitor>("""
+                SELECT id, 
+                    first_name AS FirstName, 
+                    last_name AS LastName, 
+                    email  
+                   FROM visitors
+                """);
         }
 
         public async Task<Visitor?> GetVisitorByIdAsync(int id)
         {
+            const string query = """ SELECT id, first_name AS FirstName, last_name AS LastName, email FROM visitors WHERE id = @Id""";
             using var connection = new NpgsqlConnection(_connectionString);
-            return await connection.QueryFirstOrDefaultAsync<Visitor>("SELECT * FROM visitors WHERE id = @Id", new { Id = id });
+            return await connection.QueryFirstOrDefaultAsync<Visitor>(query, new { Id = id });
         }
 
         public async Task<InsertResult<Visitor>> CreateVisitorAsync(Visitor visitor)
@@ -39,7 +46,6 @@ namespace MuseoAurora.Services
                     INSERT INTO visitors (first_name, last_name, email)
                     VALUES (@FirstName, @LastName, @Email)
                     RETURNING id;";
-
                 visitor.Id = await connection.ExecuteScalarAsync<int>(query, visitor);
                 result.Data = visitor;
             }
@@ -52,12 +58,21 @@ namespace MuseoAurora.Services
 
         public async Task<bool> UpdateVisitorAsync(Visitor visitor)
         {
-            using var connection = new NpgsqlConnection(_connectionString);
-            const string query = @"
-                UPDATE visitors 
-                SET first_name = @FirstName, last_name = @LastName, email = @Email
-                WHERE id = @Id";
-            return await connection.ExecuteAsync(query, visitor) > 0;
+            var status = true;
+            try
+            {
+                using var connection = new NpgsqlConnection(_connectionString);
+                const string query = @"
+                    UPDATE visitors 
+                    SET first_name = @FirstName, last_name = @LastName, email = @Email
+                    WHERE id = @Id";
+                status = await connection.ExecuteAsync(query, visitor) > 0;
+            }
+            catch (NpgsqlException ex)
+            {
+                return false;
+            }
+            return status;
         }
 
         public async Task<bool> DeleteVisitorAsync(int id)

@@ -21,7 +21,8 @@ namespace MuseoAurora.Services
         {
             using var connection = new NpgsqlConnection(_connectionString);
             const string query = @"
-                SELECT gt.*, e.*
+                SELECT gt.id, gt.title, gt.description, gt.start_time as StartTime, gt.duration_minutes as DurationMinutes, gt.guide_name as GuideName, gt.max_participants as MaxParticipants, gt.exhibition_id,
+                       e.id, e.title, e.description, e.start_date as StartDate, e.end_date as EndDate, e.image_url as ImageUrl, e.status
                 FROM guided_tours gt
                 INNER JOIN exhibitions e ON gt.exhibition_id = e.id";
 
@@ -39,7 +40,27 @@ namespace MuseoAurora.Services
         public async Task<GuidedTour?> GetGuidedTourByIdAsync(int id)
         {
             using var connection = new NpgsqlConnection(_connectionString);
-            return await connection.QueryFirstOrDefaultAsync<GuidedTour>("SELECT * FROM guided_tours WHERE id = @Id", new { Id = id });
+            const string query = """
+                    SELECT    
+                    gt.id, 
+                    gt.title, 
+                    gt.description, 
+                    gt.start_time as StartTime, 
+                    gt.duration_minutes as DurationMinutes, 
+                    gt.guide_name as GuideName, 
+                    gt.max_participants as MaxParticipants, 
+                    gt.exhibition_id, 
+                    e.id, 
+                    e.title, 
+                    e.description,
+                    e.start_date as StartDate, 
+                    e.end_date as EndDate, 
+                    e.image_url as ImageUrl, 
+                    e.status 
+                    FROM guided_tours gt INNER JOIN exhibitions e ON gt.exhibition_id = e.id
+                    WHERE id = @Id
+                    """;
+            return await connection.QueryFirstOrDefaultAsync<GuidedTour>(query, new { Id = id });
         }
 
         public async Task<InsertResult<GuidedTour>> CreateGuidedTourAsync(GuidedTour tour)
@@ -48,10 +69,25 @@ namespace MuseoAurora.Services
             try
             {
                 using var connection = new NpgsqlConnection(_connectionString);
-                const string query = @"
-                    INSERT INTO guided_tours (title, description, start_time, duration_minutes, guide_name, max_participants, exhibition_id)
-                    VALUES (@Title, @Description, @StartTime, @DurationMinutes, @GuideName, @MaxParticipants, @ExhibitionId)
-                    RETURNING id;";
+                const string query = """
+                    SELECT    
+                    gt.id, 
+                    gt.title, 
+                    gt.description, 
+                    gt.start_time, 
+                    gt.duration_minutes, 
+                    gt.guide_name, 
+                    gt.max_participants, 
+                    gt.exhibition_id, 
+                    e.id, 
+                    e.title, 
+                    e.description,
+                    e.start_date, 
+                    e.end_date, 
+                    e.image_url, 
+                    e.status 
+                    FROM guided_tours gt INNER JOIN exhibitions e ON gt.exhibition_id = e.id
+                    """;
 
                 var parameters = new
                 {
@@ -76,27 +112,35 @@ namespace MuseoAurora.Services
 
         public async Task<bool> UpdateGuidedTourAsync(GuidedTour tour)
         {
-            using var connection = new NpgsqlConnection(_connectionString);
-            const string query = @"
-                UPDATE guided_tours 
-                SET title = @Title, description = @Description, start_time = @StartTime, 
-                    duration_minutes = @DurationMinutes, guide_name = @GuideName, 
-                    max_participants = @MaxParticipants, exhibition_id = @ExhibitionId
-                WHERE id = @Id";
-
-            var parameters = new
+            var status = true;
+            try
             {
-                tour.Id,
-                tour.Title,
-                tour.Description,
-                tour.StartTime,
-                tour.DurationMinutes,
-                tour.GuideName,
-                tour.MaxParticipants,
-                ExhibitionId = tour.Exhibition?.Id
-            };
+                using var connection = new NpgsqlConnection(_connectionString);
+                const string query = @"
+                    UPDATE guided_tours 
+                    SET title = @Title, description = @Description, start_time = @StartTime, 
+                        duration_minutes = @DurationMinutes, guide_name = @GuideName, 
+                        max_participants = @MaxParticipants, exhibition_id = @ExhibitionId
+                    WHERE id = @Id";
 
-            return await connection.ExecuteAsync(query, parameters) > 0;
+                var parameters = new
+                {
+                    tour.Id,
+                    tour.Title,
+                    tour.Description,
+                    tour.StartTime,
+                    tour.DurationMinutes,
+                    tour.GuideName,
+                    tour.MaxParticipants,
+                    ExhibitionId = tour.Exhibition?.Id
+                };
+                status = await connection.ExecuteAsync(query, parameters) > 0;
+            }
+            catch (NpgsqlException ex)
+            {
+                return false;
+            }
+            return status;
         }
 
         public async Task<bool> DeleteGuidedTourAsync(int id)

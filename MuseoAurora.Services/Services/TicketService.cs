@@ -21,7 +21,11 @@ namespace MuseoAurora.Services
         {
             using var connection = new NpgsqlConnection(_connectionString);
             const string query = @"
-                SELECT t.*, v.*, tt.*, e.*, gt.*
+                SELECT t.id, t.quantity, t.total_price as TotalPrice, t.purchase_date as PurchaseDate, t.visitor_id, t.ticket_type_id, t.exhibition_id, t.guided_tour_id,
+                       v.id, v.first_name as FirstName, v.last_name as LastName, v.email,
+                       tt.id, tt.name, tt.price,
+                       e.id, e.title, e.description, e.start_date as StartDate, e.end_date as EndDate, e.image_url as ImageUrl, e.status,
+                       gt.id, gt.title, gt.description, gt.start_time as StartTime, gt.duration_minutes as DurationMinutes, gt.guide_name as GuideName, gt.max_participants as MaxParticipants, gt.exhibition_id
                 FROM tickets t
                 INNER JOIN visitors v ON t.visitor_id = v.id
                 INNER JOIN ticket_types tt ON t.ticket_type_id = tt.id
@@ -45,7 +49,10 @@ namespace MuseoAurora.Services
         public async Task<Ticket?> GetTicketByIdAsync(int id)
         {
             using var connection = new NpgsqlConnection(_connectionString);
-            return await connection.QueryFirstOrDefaultAsync<Ticket>("SELECT * FROM tickets WHERE id = @Id", new { Id = id });
+            const string query = @"
+                SELECT id, quantity, total_price as TotalPrice, purchase_date as PurchaseDate, visitor_id, ticket_type_id, exhibition_id, guided_tour_id 
+                FROM tickets WHERE id = @Id";
+            return await connection.QueryFirstOrDefaultAsync<Ticket>(query, new { Id = id });
         }
 
         public async Task<InsertResult<Ticket>> CreateTicketAsync(Ticket ticket)
@@ -82,27 +89,36 @@ namespace MuseoAurora.Services
 
         public async Task<bool> UpdateTicketAsync(Ticket ticket)
         {
-            using var connection = new NpgsqlConnection(_connectionString);
-            const string query = @"
-                UPDATE tickets 
-                SET quantity = @Quantity, total_price = @TotalPrice, purchase_date = @PurchaseDate, 
-                    visitor_id = @VisitorId, ticket_type_id = @TicketTypeId, 
-                    exhibition_id = @ExhibitionId, guided_tour_id = @GuidedTourId
-                WHERE id = @Id";
-
-            var parameters = new
+            var status = true;
+            try
             {
-                ticket.Id,
-                ticket.Quantity,
-                ticket.TotalPrice,
-                ticket.PurchaseDate,
-                VisitorId = ticket.Visitor?.Id,
-                TicketTypeId = ticket.TicketType?.Id,
-                ExhibitionId = ticket.Exhibition?.Id > 0 ? ticket.Exhibition.Id : (int?)null,
-                GuidedTourId = ticket.GuidedTour?.Id > 0 ? ticket.GuidedTour.Id : (int?)null
-            };
+                using var connection = new NpgsqlConnection(_connectionString);
+                const string query = @"
+                    UPDATE tickets 
+                    SET quantity = @Quantity, total_price = @TotalPrice, purchase_date = @PurchaseDate, 
+                        visitor_id = @VisitorId, ticket_type_id = @TicketTypeId, 
+                        exhibition_id = @ExhibitionId, guided_tour_id = @GuidedTourId
+                    WHERE id = @Id";
 
-            return await connection.ExecuteAsync(query, parameters) > 0;
+                var parameters = new
+                {
+                    ticket.Id,
+                    ticket.Quantity,
+                    ticket.TotalPrice,
+                    ticket.PurchaseDate,
+                    VisitorId = ticket.Visitor?.Id,
+                    TicketTypeId = ticket.TicketType?.Id,
+                    ExhibitionId = ticket.Exhibition?.Id > 0 ? ticket.Exhibition.Id : (int?)null,
+                    GuidedTourId = ticket.GuidedTour?.Id > 0 ? ticket.GuidedTour.Id : (int?)null
+                };
+
+                status = await connection.ExecuteAsync(query, parameters) > 0;
+            }
+            catch (NpgsqlException ex)
+            {
+                return false;
+            }
+            return status;
         }
 
         public async Task<bool> DeleteTicketAsync(int id)

@@ -20,13 +20,15 @@ namespace MuseoAurora.Services
         public async Task<IEnumerable<TicketType>> GetTicketTypesAsync()
         {
             using var connection = new NpgsqlConnection(_connectionString);
-            return await connection.QueryAsync<TicketType>("SELECT * FROM ticket_types");
+            const string query = "SELECT id, name, price FROM ticket_types";
+            return await connection.QueryAsync<TicketType>(query);
         }
 
         public async Task<TicketType?> GetTicketTypeByIdAsync(int id)
         {
             using var connection = new NpgsqlConnection(_connectionString);
-            return await connection.QueryFirstOrDefaultAsync<TicketType>("SELECT * FROM ticket_types WHERE id = @Id", new { Id = id });
+            const string query = "SELECT id, name, price FROM ticket_types WHERE id = @Id";
+            return await connection.QueryFirstOrDefaultAsync<TicketType>(query, new { Id = id });
         }
 
         public async Task<InsertResult<TicketType>> CreateTicketTypeAsync(TicketType ticketType)
@@ -52,12 +54,21 @@ namespace MuseoAurora.Services
 
         public async Task<bool> UpdateTicketTypeAsync(TicketType ticketType)
         {
-            using var connection = new NpgsqlConnection(_connectionString);
-            const string query = @"
-                UPDATE ticket_types 
-                SET name = @Name, price = @Price
-                WHERE id = @Id";
-            return await connection.ExecuteAsync(query, ticketType) > 0;
+            var status = true;
+            try
+            {
+                using var connection = new NpgsqlConnection(_connectionString);
+                const string query = @"
+                    UPDATE ticket_types 
+                    SET name = @Name, price = @Price
+                    WHERE id = @Id";
+                status = await connection.ExecuteAsync(query, ticketType) > 0;
+            }
+            catch (NpgsqlException ex)
+            {
+                return false;
+            }
+            return status;
         }
 
         public async Task<bool> DeleteTicketTypeAsync(int id)

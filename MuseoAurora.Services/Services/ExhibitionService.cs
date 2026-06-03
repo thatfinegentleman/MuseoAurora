@@ -1,10 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using Dapper;
 using Microsoft.Extensions.Configuration;
-using Dapper;
-using Npgsql;
 using MuseoAurora.Models;
+using Npgsql;
+using System;
+using System.Collections.Generic;
+using System.Net.NetworkInformation;
+using System.Threading.Tasks;
 
 namespace MuseoAurora.Services
 {
@@ -20,13 +21,15 @@ namespace MuseoAurora.Services
         public async Task<IEnumerable<Exhibition>> GetExhibitionsAsync()
         {
             using var connection = new NpgsqlConnection(_connectionString);
-            return await connection.QueryAsync<Exhibition>("SELECT * FROM exhibitions");
+            const string query = "SELECT id, title, description, start_date as StartDate, end_date as EndDate, image_url as ImageUrl, status FROM exhibitions";
+            return await connection.QueryAsync<Exhibition>(query);
         }
 
         public async Task<Exhibition?> GetExhibitionByIdAsync(int id)
         {
             using var connection = new NpgsqlConnection(_connectionString);
-            return await connection.QueryFirstOrDefaultAsync<Exhibition>("SELECT * FROM exhibitions WHERE id = @Id", new { Id = id });
+            const string query = "SELECT id, title, description, start_date as StartDate, end_date as EndDate, image_url as ImageUrl, status FROM exhibitions WHERE id = @Id";
+            return await connection.QueryFirstOrDefaultAsync<Exhibition>(query, new { Id = id });
         }
 
         public async Task<InsertResult<Exhibition>> CreateExhibitionAsync(Exhibition exhibition)
@@ -52,13 +55,22 @@ namespace MuseoAurora.Services
 
         public async Task<bool> UpdateExhibitionAsync(Exhibition exhibition)
         {
-            using var connection = new NpgsqlConnection(_connectionString);
-            const string query = @"
+            var status = true;
+            try
+            {
+                using var connection = new NpgsqlConnection(_connectionString);
+                const string query = @"
                 UPDATE exhibitions 
                 SET title = @Title, description = @Description, start_date = @StartDate, 
                     end_date = @EndDate, image_url = @ImageUrl, status = @Status
                 WHERE id = @Id";
-            return await connection.ExecuteAsync(query, exhibition) > 0;
+                status = await connection.ExecuteAsync(query, exhibition) > 0;
+            }
+            catch (NpgsqlException ex)
+            {
+                return false;
+            }
+            return status;
         }
 
         public async Task<bool> DeleteExhibitionAsync(int id)
