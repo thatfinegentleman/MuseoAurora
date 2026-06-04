@@ -52,7 +52,20 @@ namespace MuseoAurora.Services
             const string query = @"
                 SELECT id, quantity, total_price as TotalPrice, purchase_date as PurchaseDate, visitor_id, ticket_type_id, exhibition_id, guided_tour_id 
                 FROM tickets WHERE id = @Id";
-            return await connection.QueryFirstOrDefaultAsync<Ticket>(query, new { Id = id });
+            var ticket = await connection.QueryAsync<Ticket, Visitor, TicketType, Exhibition, GuidedTour, Ticket>(
+                query,
+                (ticket, visitor, type, exhibition, tour) =>
+                {
+                    ticket.Visitor = visitor;
+                    ticket.TicketType = type;
+                    if (exhibition != null) ticket.Exhibition = exhibition;
+                    if (tour != null) ticket.GuidedTour = tour;
+                    return ticket;
+                },
+                splitOn: "id,id,id,id"
+            );
+
+            return ticket.FirstOrDefault();
         }
 
         public async Task<InsertResult<Ticket>> CreateTicketAsync(Ticket ticket)

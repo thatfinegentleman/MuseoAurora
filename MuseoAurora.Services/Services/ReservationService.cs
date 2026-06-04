@@ -49,8 +49,21 @@ namespace MuseoAurora.Services
                        gt.id, gt.title, gt.description, gt.start_time as StartTime, gt.duration_minutes as DurationMinutes, gt.guide_name as GuideName, gt.max_participants as MaxParticpants, gt.exhibition_id
                 FROM reservations r
                 INNER JOIN visitors v ON r.visitor_id = v.id
-                INNER JOIN guided_tours gt ON r.guided_tour_id = gt.id";
-            return await connection.QueryFirstOrDefaultAsync<Reservation>(query, new { Id = id });
+                INNER JOIN guided_tours gt ON r.guided_tour_id = gt.id
+                WHERE r.id = @Id"";";
+            var reservations = await connection.QueryAsync<Reservation, Visitor, GuidedTour, Reservation>(
+                query,
+                (reservation, visitor, guidedTour) =>
+                {
+                    reservation.Visitor = visitor;
+                    reservation.GuidedTour = guidedTour;
+                    return reservation;
+                },
+                new { Id = id },
+                splitOn: "id,id" 
+            );
+
+            return reservations.FirstOrDefault();
         }
 
         public async Task<InsertResult<Reservation>> CreateReservationAsync(Reservation reservation)
