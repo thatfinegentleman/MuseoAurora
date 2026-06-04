@@ -58,7 +58,7 @@ namespace MuseoAurora.Services
                     e.image_url as ImageUrl, 
                     e.status 
                     FROM guided_tours gt INNER JOIN exhibitions e ON gt.exhibition_id = e.id
-                    WHERE id = @Id
+                    WHERE gt.id = @Id
                     """;
             return await connection.QueryFirstOrDefaultAsync<GuidedTour>(query, new { Id = id });
         }
@@ -70,23 +70,9 @@ namespace MuseoAurora.Services
             {
                 using var connection = new NpgsqlConnection(_connectionString);
                 const string query = """
-                    SELECT    
-                    gt.id, 
-                    gt.title, 
-                    gt.description, 
-                    gt.start_time, 
-                    gt.duration_minutes, 
-                    gt.guide_name, 
-                    gt.max_participants, 
-                    gt.exhibition_id, 
-                    e.id, 
-                    e.title, 
-                    e.description,
-                    e.start_date, 
-                    e.end_date, 
-                    e.image_url, 
-                    e.status 
-                    FROM guided_tours gt INNER JOIN exhibitions e ON gt.exhibition_id = e.id
+                    INSERT INTO guided_tours (title, description, start_time, duration_minutes, guide_name, max_participants, exhibition_id)
+                    VALUES (@Title, @Description, @StartTime, @DurationMinutes, @GuideName, @MaxParticipants, @ExhibitionId)
+                    RETURNING id;
                     """;
 
                 var parameters = new
@@ -97,7 +83,7 @@ namespace MuseoAurora.Services
                     tour.DurationMinutes,
                     tour.GuideName,
                     tour.MaxParticipants,
-                    ExhibitionId = tour.Exhibition?.Id
+                    ExhibitionId = tour.Exhibition?.Id > 0 ? tour.Exhibition.Id : (int?)null
                 };
 
                 tour.Id = await connection.ExecuteScalarAsync<int>(query, parameters);

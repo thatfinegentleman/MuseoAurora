@@ -1,16 +1,16 @@
 ﻿@page "/guidedtours/create"
 @page "/guidedtours/edit/{Id:int}"
 
-<h3>@(Id.HasValue ? "Edit Guided Tour" : "Create Guided Tour")</h3>
+<h3>@(Id.HasValue ? "Modifica tour guidato" : "Crea tour guidato")</h3>
 
 <EditForm Model="tour" OnValidSubmit="HandleSubmit">
     <DataAnnotationsValidator />
 
     <div class="mb-3">
-        <label>Exhibition</label>
+        <label>Mostra</label>
         <InputSelect class="input-brand"
             @bind-Value="tour.Exhibition.Id">
-            <option value="0">Select Exhibition...</option>
+            <option value="0">Seleziona una mostra...</option>
             @foreach (var exhibition in availableExhibitions)
             {
                 <option value="@exhibition.Id">@exhibition.Title</option>
@@ -19,27 +19,27 @@
     </div>
 
     <div class="mb-3">
-        <label>Title</label>
+        <label>Titolo</label>
         <InputText class="input-brand" @bind-Value="tour.Title" />
     </div>
 
     <div class="mb-3">
-        <label>Start Time</label>
+        <label>Data e ora d'inizio</label>
         <InputDate Type="InputDateType.DateTimeLocal" class="input-brand" @bind-Value="tour.StartTime" />
     </div>
 
     <div class="mb-3">
-        <label>Duration (Minutes)</label>
+        <label>Durata in minuti</label>
         <InputNumber class="input-brand" @bind-Value="tour.DurationMinutes" />
     </div>
 
     <div class="mb-3">
-        <label>Guide Name</label>
+        <label>Nome della guida</label>
         <InputText class="input-brand" @bind-Value="tour.GuideName" />
     </div>
 
     <div class="mb-3">
-        <label>Max Participants</label>
+        <label>Numero massimo di partecipanti</label>
         <InputNumber class="input-brand" @bind-Value="tour.MaxParticipants" />
     </div>
 

@@ -1,23 +1,23 @@
 ﻿@page "/exhibitions"
 
-<h3>Exhibitions</h3>
+<h3>Mostre</h3>
 
-<a href="/exhibitions/create" class="btn-brand btn-primary mb-3">Add Exhibition</a>
+<a href="/exhibitions/create" class="btn-brand btn-primary mb-3">Aggiungi mostra</a>
 
 @if (exhibitions == null)
 {
-    <p>Loading...</p>
+    <p>Caricamento...</p>
 }
 else
 {
     <table class="table-brand">
         <thead>
             <tr>
-                <th>Title</th>
-                <th>Start Date</th>
-                <th>End Date</th>
+                <th>Titolo</th>
+                <th>Data d'inizio</th>
+                <th>Data di fine</th>
                 <th>Status</th>
-                <th>Actions</th>
+                <th>Azioni</th>
             </tr>
         </thead>
         <tbody>
@@ -29,7 +29,7 @@ else
                     <td>@item.EndDate?.ToShortDateString()</td>
                     <td>@item.Status</td>
                     <td>
-                        <a href="/exhibitions/edit/@item.Id" class="btn-brand btn-edit">Edit</a>
+                        <a href="/exhibitions/edit/@item.Id" class="btn-brand btn-edit">Modifica</a>
                     </td>
                 </tr>
             }

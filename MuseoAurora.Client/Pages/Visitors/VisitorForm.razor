@@ -1,18 +1,18 @@
 ﻿@page "/visitors/create"
 @page "/visitors/edit/{Id:int}"
 
-<h3>@(Id.HasValue ? "Edit Visitor" : "Create Visitor")</h3>
+<h3>@(Id.HasValue ? "Modifica visitatore" : "Crea visitatore")</h3>
 
 <EditForm Model="visitor" OnValidSubmit="HandleSubmit">
     <DataAnnotationsValidator />
 
     <div class="mb-3">
-        <label>First Name</label>
+        <label>Nome</label>
         <InputText class="input-brand" @bind-Value="visitor.FirstName" />
     </div>
 
     <div class="mb-3">
-        <label>Last Name</label>
+        <label>Cognome</label>
         <InputText class="input-brand" @bind-Value="visitor.LastName" />
     </div>
 
@@ -21,6 +21,6 @@
         <InputText class="input-brand" @bind-Value="visitor.Email" />
     </div>
 
-    <button type="submit" class="btn-brand btn-save">Save</button>
-    <a href="/visitors" class="btn-brand btn-cancel">Cancel</a>
+    <button type="submit" class="btn-brand btn-save">Salva</button>
+    <a href="/visitors" class="btn-brand btn-cancel">Annulla</a>
 </EditForm>

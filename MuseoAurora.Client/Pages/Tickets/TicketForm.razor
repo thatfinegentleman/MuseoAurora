@@ -1,15 +1,15 @@
 ﻿@page "/tickets/create"
 @page "/tickets/edit/{Id:int}"
 
-<h3>@(Id.HasValue ? "Edit Ticket" : "Create Ticket")</h3>
+<h3>@(Id.HasValue ? "Modifica biglietto" : "Crea biglietto")</h3>
 
 <EditForm Model="ticket" OnValidSubmit="HandleSubmit">
     <DataAnnotationsValidator />
 
     <div class="mb-3">
-        <label>Visitor</label>
+        <label>Visitatore</label>
         <InputSelect class="input-brand" @bind-Value="ticket.Visitor.Id">
-            <option value="0">Select Visitor...</option>
+            <option value="0">Seleziona un visitatore...</option>
             @foreach (var v in availableVisitors)
             {
                 <option value="@v.Id">@v.LastName @v.FirstName</option>
@@ -20,7 +20,7 @@
     <div class="mb-3">
         <label>Ticket Type</label>
         <InputSelect class="input-brand" @bind-Value="ticket.TicketType.Id">
-            <option value="0">Select Ticket Type...</option>
+            <option value="0">Seleziona un tipo di biglietto...</option>
             @foreach (var t in availableTicketTypes)
             {
                 <option value="@t.Id">@t.Name</option>
@@ -29,7 +29,7 @@
     </div>
 
     <div class="mb-3">
-        <label>Exhibition (Optional)</label>
+        <label>Mostra (opzionale)</label>
         <InputSelect class="input-brand" @bind-Value="ticket.Exhibition.Id">
             <option value="0">None...</option>
             @foreach (var e in availableExhibitions)
@@ -40,7 +40,7 @@
     </div>
 
     <div class="mb-3">
-        <label>Guided Tour (Optional)</label>
+        <label>Tour guidato (opzionale)</label>
         <InputSelect class="input-brand" @bind-Value="ticket.GuidedTour.Id">
             <option value="0">None...</option>
             @foreach (var gt in availableTours)
@@ -51,15 +51,15 @@
     </div>
 
     <div class="mb-3">
-        <label>Quantity</label>
+        <label>Quantità</label>
         <InputNumber class="input-brand" @bind-Value="ticket.Quantity" />
     </div>
 
     <div class="mb-3">
-        <label>Total Price</label>
+        <label>Prezzo totale</label>
         <InputNumber class="input-brand" @bind-Value="ticket.TotalPrice" />
     </div>
 
-    <button type="submit" class="btn-brand btn-save">Save</button>
-    <a href="/tickets" class="btn-brand btn-cancel">Cancel</a>
+    <button type="submit" class="btn-brand btn-save">Salva</button>
+    <a href="/tickets" class="btn-brand btn-cancel">Annulla</a>
 </EditForm>

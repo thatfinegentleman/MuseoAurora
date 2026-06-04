@@ -1,15 +1,15 @@
 ﻿@page "/artworks/create"
 @page "/artworks/edit/{Id:int}"
 
-<h3>@(Id.HasValue ? "Edit Artwork" : "Create Artwork")</h3>
+<h3>@(Id.HasValue ? "Modifica opera d'arte" : "Crea opera d'arte")</h3>
 
 <EditForm Model="artwork" OnValidSubmit="HandleSubmit">
     <DataAnnotationsValidator />
 
     <div class="mb-3">
-        <label>Exhibition</label>
+        <label>Mostra</label>
         <InputSelect class="input-brand" @bind-Value="artwork.Exhibition.Id">
-            <option value="0">Select Exhibition...</option>
+            <option value="0">Seleziona una mostra...</option>
             @foreach (var exhibition in availableExhibitions)
             {
                 <option value="@exhibition.Id">@exhibition.Title</option>
@@ -18,20 +18,20 @@
     </div>
 
     <div class="mb-3">
-        <label>Title</label>
+        <label>Nome</label>
         <InputText class="input-brand" @bind-Value="artwork.Title" />
     </div>
 
     <div class="mb-3">
-        <label>Author</label>
+        <label>Autore</label>
         <InputText class="input-brand" @bind-Value="artwork.Author" />
     </div>
 
     <div class="mb-3">
-        <label>Year</label>
+        <label>Anno</label>
         <InputNumber class="input-brand" @bind-Value="artwork.Year" />
     </div>
 
-    <button type="submit" class="btn-brand btn-save">Save</button>
-    <a href="/artworks" class="btn-brand btn-cancel">Cancel</a>
+    <button type="submit" class="btn-brand btn-save">Salva</button>
+    <a href="/artworks" class="btn-brand btn-cancel">Annulla</a>
 </EditForm>

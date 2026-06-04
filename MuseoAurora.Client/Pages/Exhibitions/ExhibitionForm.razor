@@ -1,28 +1,28 @@
 ﻿@page "/exhibitions/create"
 @page "/exhibitions/edit/{Id:int}"
 
-<h3>@(Id.HasValue ? "Edit Exhibition" : "Create Exhibition")</h3>
+<h3>@(Id.HasValue ? "Modifica mostra" : "Crea mostra")</h3>
 
 <EditForm Model="exhibition" OnValidSubmit="HandleSubmit">
     <DataAnnotationsValidator />
 
     <div class="mb-3">
-        <label>Title</label>
+        <label>Titolo</label>
         <InputText class="input-brand" @bind-Value="exhibition.Title" />
     </div>
 
     <div class="mb-3">
-        <label>Description</label>
+        <label>Descrizione</label>
         <InputTextArea class="input-brand" @bind-Value="exhibition.Description" />
     </div>
 
     <div class="mb-3">
-        <label>Start Date</label>
+        <label>Data d'inizio</label>
         <InputDate class="input-brand" @bind-Value="exhibition.StartDate" />
     </div>
 
     <div class="mb-3">
-        <label>End Date</label>
+        <label>Data di fine</label>
         <InputDate class="input-brand" @bind-Value="exhibition.EndDate" />
     </div>
 
@@ -31,6 +31,6 @@
         <InputText class="input-brand" @bind-Value="exhibition.Status" />
     </div>
 
-    <button type="submit" class="btn-brand btn-save">Save</button>
-    <a href="/exhibitions" class="btn-brand btn-cancel">Cancel</a>
+    <button type="submit" class="btn-brand btn-save">Salva</button>
+    <a href="/exhibitions" class="btn-brand btn-cancel">Annulla</a>
 </EditForm>

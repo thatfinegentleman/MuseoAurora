@@ -1,20 +1,21 @@
 ﻿@page "/tickettypes"
 
-<h3>Ticket Types</h3>
+<h3>Tipi di biglietto</h3>
 
-<a href="/tickettypes/create" class="btn-brand btn-primary mb-3">Add Ticket Type</a>
+<a href="/tickettypes/create" class="btn-brand btn-primary mb-3">Aggiungi tipo di biglietto</a>
 
 @if (ticketTypes == null)
 {
-    <p>Loading...</p>
+    <p>Caricamento...</p>
 }
 else
 {
     <table class="table-brand">
         <thead>
             <tr>
-                <th>Name</th>
-                <th>Price</th>
+                <th>Nome</th>
+                <th>Prezzo</th>
+                <th>Azioni</th>
             </tr>
         </thead>
         <tbody>
@@ -23,6 +24,9 @@ else
                 <tr>
                     <td>@item.Name</td>
                     <td>@item.Price</td>
+                    <td>
+                        <a href="/tickettypes/edit/@item.Id" class="btn-brand btn-edit">Modifica</a>
+                    </td>
                 </tr>
             }
         </tbody>

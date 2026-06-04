@@ -1,22 +1,22 @@
 ﻿@page "/reservations"
 
-<h3>Reservations</h3>
+<h3>Prenotazioni</h3>
 
-<a href="/reservations/create" class="btn-brand btn-primary mb-3">Add Reservation</a>
+<a href="/reservations/create" class="btn-brand btn-primary mb-3">Aggiungi prenotazione</a>
 
 @if (reservations == null)
 {
-    <p>Loading...</p>
+    <p>Caricamento...</p>
 }
 else
 {
     <table class="table-brand">
         <thead>
             <tr>
-                <th>Date</th>
-                <th>Participants</th>
+                <th>Data</th>
+                <th>Partecipanti</th>
                 <th>Status</th>
-                <th>Actions</th>
+                <th>Azioni</th>
             </tr>
         </thead>
         <tbody>
@@ -27,7 +27,7 @@ else
                     <td>@item.ParticipantsCount</td>
                     <td>@item.Status</td>
                     <td>
-                        <a href="/reservations/edit/@item.Id" class="btn-brand btn-edit">Edit</a>
+                        <a href="/reservations/edit/@item.Id" class="btn-brand btn-edit">Modifica</a>
                     </td>
                 </tr>
             }

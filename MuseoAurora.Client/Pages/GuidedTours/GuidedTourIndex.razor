@@ -1,22 +1,23 @@
 ﻿@page "/guidedtours"
 
-<h3>Guided Tours</h3>
+<h3>Tour guidati</h3>
 
-<a href="/guidedtours/create" class="btn-brand btn-primary mb-3">Add Guided Tour</a>
+<a href="/guidedtours/create" class="btn-brand btn-primary mb-3">Aggiungi tour guidato</a>
 
 @if (tours == null)
 {
-    <p>Loading...</p>
+    <p>Caricamento...</p>
 }
 else
 {
     <table class="table-brand">
         <thead>
             <tr>
-                <th>Title</th>
-                <th>Start Time</th>
-                <th>Guide Name</th>
-                <th>Actions</th>
+                <th>Titolo</th>
+                <th>Ora d'inizio</th>
+                <th>Durata</th>
+                <th>Nome della guida</th>
+                <th>Azioni</th>
             </tr>
         </thead>
         <tbody>
@@ -25,9 +26,10 @@ else
                 <tr>
                     <td>@item.Title</td>
                     <td>@item.StartTime</td>
+                    <td>@item.DurationMinutes min</td>
                     <td>@item.GuideName</td>
                     <td>
-                        <a href="/guidedtours/edit/@item.Id" class="btn-brand btn-edit">Edit</a>
+                        <a href="/guidedtours/edit/@item.Id" class="btn-brand btn-edit">Modifica</a>
                     </td>
                 </tr>
             }
