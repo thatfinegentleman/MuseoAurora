@@ -50,7 +50,7 @@ namespace MuseoAurora.Services
                 FROM reservations r
                 INNER JOIN visitors v ON r.visitor_id = v.id
                 INNER JOIN guided_tours gt ON r.guided_tour_id = gt.id
-                WHERE r.id = @Id"";";
+                WHERE r.id = @Id";
             var reservations = await connection.QueryAsync<Reservation, Visitor, GuidedTour, Reservation>(
                 query,
                 (reservation, visitor, guidedTour) =>
