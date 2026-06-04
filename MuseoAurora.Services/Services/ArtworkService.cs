@@ -55,9 +55,35 @@ namespace MuseoAurora.Services
         {
             using var connection = new NpgsqlConnection(_connectionString);
             const string query = @"
-                SELECT id, title, author, year, description, technique, image_url as ImageUrl, exhibition_id 
-                FROM artworks WHERE id = @Id";
-            return await connection.QueryFirstOrDefaultAsync<Artwork>(query, new { Id = id });
+                SELECT 
+                a.id, 
+                a.title, 
+                a.author, 
+                a.year, 
+                a.description, 
+                a.technique, 
+                a.image_url as ImageUrl, 
+                a.exhibition_id, 
+                e.id,
+                e.title, 
+                e.description, 
+                e.start_date as StartDate, 
+                e.end_date as EndDate, 
+                e.image_url as ImageUrl, 
+                e.status 
+                FROM artworks a LEFT JOIN exhibitions e ON a.exhibition_id = e.id 
+                WHERE a.id = @Id";
+            var artworks = await connection.QueryAsync<Artwork, Exhibition, Artwork>(
+                query,
+                (artwork, exhibition) =>
+                {
+                    artwork.Exhibition = exhibition;
+                    return artwork;
+                },
+                new { Id = id },
+                splitOn: "id" 
+            );
+            return artworks.FirstOrDefault();
         }
 
         public async Task<InsertResult<Artwork>> CreateArtworkAsync(Artwork artwork)
