@@ -50,8 +50,17 @@ namespace MuseoAurora.Services
         {
             using var connection = new NpgsqlConnection(_connectionString);
             const string query = @"
-                SELECT id, quantity, total_price as TotalPrice, purchase_date as PurchaseDate, visitor_id, ticket_type_id, exhibition_id, guided_tour_id 
-                FROM tickets WHERE id = @Id";
+                SELECT t.id, t.quantity, t.total_price as TotalPrice, t.purchase_date as PurchaseDate, t.visitor_id, t.ticket_type_id, t.exhibition_id, t.guided_tour_id,
+                       v.id, v.first_name as FirstName, v.last_name as LastName, v.email,
+                       tt.id, tt.name, tt.price,
+                       e.id, e.title, e.description, e.start_date as StartDate, e.end_date as EndDate, e.image_url as ImageUrl, e.status,
+                       gt.id, gt.title, gt.description, gt.start_time as StartTime, gt.duration_minutes as DurationMinutes, gt.guide_name as GuideName, gt.max_participants as MaxParticipants, gt.exhibition_id
+                FROM tickets t
+                INNER JOIN visitors v ON t.visitor_id = v.id
+                INNER JOIN ticket_types tt ON t.ticket_type_id = tt.id
+                LEFT JOIN exhibitions e ON t.exhibition_id = e.id
+                LEFT JOIN guided_tours gt ON t.guided_tour_id = gt.id 
+                WHERE t.id = @Id";
             var ticket = await connection.QueryAsync<Ticket, Visitor, TicketType, Exhibition, GuidedTour, Ticket>(
                 query,
                 (ticket, visitor, type, exhibition, tour) =>
@@ -62,6 +71,7 @@ namespace MuseoAurora.Services
                     if (tour != null) ticket.GuidedTour = tour;
                     return ticket;
                 },
+                new { Id = id },
                 splitOn: "id,id,id,id"
             );
 
