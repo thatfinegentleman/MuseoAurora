@@ -12,6 +12,7 @@ namespace MuseoAurora.Client.Pages.Reservations
         [Inject] public VisitorProxyService VisitorService { get; set; } = default!;
         [Inject] public GuidedTourProxyService GuidedTourService { get; set; } = default!;
         [Inject] public NavigationManager NavManager { get; set; } = default!;
+        [CascadingParameter(Name = "AdminState")] public bool IsAdmin { get; set; }
 
         [Parameter] public int? Id { get; set; }
 

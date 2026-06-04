@@ -14,7 +14,18 @@ namespace MuseoAurora.Client.Pages.Tickets
 
         protected override async Task OnInitializedAsync()
         {
+            await LoadData();
+        }
+
+        private async Task LoadData()
+        {
             tickets = await TicketService.GetAllAsync();
+        }
+
+        private async Task Delete(int id)
+        {
+            await TicketService.DeleteAsync(id);
+            await LoadData();
         }
     }
 }

@@ -66,6 +66,7 @@ h1:focus {
 /* variabili colore */
 :root {
     --brand-terracotta: #c2410c;
+    --brand-yellow: #e0be1a; 
     --brand-beige: #f4ebe1;
     --brand-green: #8d9033;
     --brand-dark: #2a2a2a;
@@ -95,7 +96,7 @@ main {
     width: 100%;
 }
 
-/* navbar orizzontale in terracotta */
+/* navbar */
 .navbar-brand-container {
     background-color: var(--brand-terracotta);
     padding: 1rem 2rem;
@@ -113,7 +114,6 @@ main {
     letter-spacing: 0.05rem;
 }
 
-/* menu di navigazione e animazioni */
 .nav-horizontal {
     display: flex;
     flex-direction: row;
@@ -141,7 +141,6 @@ main {
         color: var(--brand-light);
     }
 
-    /* linea decorativa on hover */
     .nav-link::after {
         content: '';
         position: absolute;
@@ -155,6 +154,41 @@ main {
 
     .nav-link:hover::after, .nav-link.active::after {
         width: 100%;
+    }
+
+/* Logo e contenitore del titolo */
+.brand-wrapper {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.navbar-logo {
+    height: 40px;
+    margin-right: 15px;
+}
+
+.nav-controls {
+    display: flex;
+    align-items: center;
+}
+
+/* Bottone admin mode */
+.btn-toggle-admin {
+    background-color: var(--brand-beige);
+    color: var(--brand-terracotta);
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-left: 2rem;
+}
+
+    .btn-toggle-admin:hover {
+        background-color: var(--brand-light);
+        transform: scale(1.05);
     }
 
 /* tabelle */
@@ -199,6 +233,13 @@ main {
 }
 
 .btn-edit {
+    background-color: var(--brand-yellow);
+    color: var(--brand-dark);
+    padding: 0.25rem 0.75rem;
+    font-size: 0.9rem;
+}
+
+.btn-delete {
     background-color: var(--brand-terracotta);
     color: var(--brand-light);
     padding: 0.25rem 0.75rem;
@@ -235,3 +276,144 @@ label {
         outline: none;
         border-color: var(--brand-terracotta);
     }
+
+/* ----------------- HOMEPAGE ----------------- */
+/* Home Visitatore */
+.hero-section {
+    background-color: var(--brand-terracotta);
+    background-image: linear-gradient(rgba(194, 65, 12, 0.45), rgba(42, 42, 42, 0.45)), url('images/hero-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: var(--brand-light);
+    padding: 6rem 2rem;
+    border-radius: 12px;
+    text-align: center;
+    margin-bottom: 3rem;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.hero-title {
+    font-size: 3.5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    letter-spacing: -0.05rem;
+}
+
+.hero-subtitle {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    opacity: 0.9;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+/* Struttura base della card per il visitatore */
+.feature-card {
+    background-color: var(--brand-terracotta);
+    color: var(--brand-light);
+    padding: 2.5rem 2rem;
+    border-radius: 12px;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    min-height: 250px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+    .feature-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 24px rgba(0,0,0,0.2);
+    }
+
+/* card Opere */
+.card-opere {
+    background-image: linear-gradient(rgba(42, 42, 42, 0.6), rgba(141, 144, 51, 0.3)), url('images/opere-bg.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+/* card Tour */
+.card-tour {
+    background-image: linear-gradient(rgba(42, 42, 42, 0.6), rgba(194, 65, 12, 0.3)), url('images/tour-bg.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+/* Contenuto delle card */
+.feature-card h3 {
+    color: var(--brand-light);
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+    position: relative;
+    z-index: 2;
+}
+
+.feature-card p {
+    color: var(--brand-beige);
+    position: relative;
+    z-index: 2;
+    margin-bottom: 1.5rem;
+}
+
+.card-link {
+    display: inline-block;
+    color: var(--brand-light);
+    font-weight: bold;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.05rem;
+    font-size: 0.9rem;
+    position: relative;
+    z-index: 2;
+    align-self: flex-start;
+    padding-bottom: 0.2rem;
+    border-bottom: 2px solid transparent;
+    transition: border-color 0.3s ease;
+}
+
+.feature-card:hover .card-link {
+    border-color: var(--brand-light);
+}
+
+/* Home Admin */
+.dashboard-header {
+    margin-bottom: 2rem;
+    border-bottom: 2px solid var(--brand-terracotta);
+    padding-bottom: 1rem;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+}
+
+.stat-card {
+    background-color: var(--brand-light);
+    padding: 1.5rem;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+.stat-number {
+    font-size: 3rem;
+    font-weight: bold;
+    color: var(--brand-terracotta);
+    margin: 0.5rem 0;
+}
+
+.quick-actions {
+    display: flex;
+    gap: 1rem;
+}

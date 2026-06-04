@@ -14,7 +14,18 @@ namespace MuseoAurora.Client.Pages.Visitors
 
         protected override async Task OnInitializedAsync()
         {
+            await LoadData();
+        }
+
+        private async Task LoadData()
+        {
             visitors = await VisitorService.GetAllAsync();
+        }
+
+        private async Task Delete(int id)
+        {
+            await VisitorService.DeleteAsync(id);
+            await LoadData();
         }
     }
 }

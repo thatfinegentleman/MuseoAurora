@@ -16,7 +16,10 @@ else
                 <th>Data</th>
                 <th>Partecipanti</th>
                 <th>Status</th>
-                <th>Azioni</th>
+                @if (IsAdmin)
+                {
+                    <th>Azioni</th>
+                }
             </tr>
         </thead>
         <tbody>
@@ -26,9 +29,13 @@ else
                     <td>@item.ReservationDate?.ToShortDateString()</td>
                     <td>@item.ParticipantsCount</td>
                     <td>@item.Status</td>
-                    <td>
-                        <a href="/reservations/edit/@item.Id" class="btn-brand btn-edit">Modifica</a>
-                    </td>
+                    @if (IsAdmin)
+                    {
+                        <td>
+                            <a href="/reservations/edit/@item.Id" class="btn-brand btn-edit">Modifica</a>
+                            <button class="btn-brand btn-delete" @onclick="() => Delete(item.Id)">Elimina</button>
+                        </td>
+                    }
                 </tr>
             }
         </tbody>

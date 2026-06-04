@@ -1,7 +1,65 @@
 ﻿@page "/"
 
-<PageTitle>Home</PageTitle>
+<PageTitle>Home - Museo Civico Aurora</PageTitle>
 
-<h1>Hello, world!</h1>
+@if (IsAdmin)
+{
+    <div class="dashboard-header">
+        <h2>Pannello di controllo</h2>
+        <p>Benvenuto nell'area gestionale del Museo Civico Aurora.</p>
+    </div>
 
-Welcome to your new app.
+    <div class="stats-grid">
+        <div class="stat-card">
+            <h3>Mostre attive</h3>
+            <div class="stat-number">3</div>
+            <p>Mostre attualmente aperte al pubblico</p>
+        </div>
+        <div class="stat-card">
+            <h3>Visite di oggi</h3>
+            <div class="stat-number">12</div>
+            <p>Prenotazioni confermate per tour guidati</p>
+        </div>
+        <div class="stat-card">
+            <h3>Biglietti venduti</h3>
+            <div class="stat-number">145</div>
+            <p>Totale ingressi registrati questo mese</p>
+        </div>
+    </div>
+
+    <h3>Azioni rapide</h3>
+    <div class="quick-actions mt-3">
+        <a href="/exhibitions/create" class="btn-brand btn-primary">Nuova mostra</a>
+        <a href="/guidedtours/create" class="btn-brand btn-primary">Nuova visita guidata</a>
+        <a href="/tickets/create" class="btn-brand btn-primary">Registra biglietto</a>
+    </div>
+}
+else
+{
+    <div class="hero-section">
+        <h1 class="hero-title">L'arte incontra il digitale.</h1>
+        <p class="hero-subtitle">Esplora le collezioni, scopri le mostre temporanee e prenota la tua visita al Museo Civico Aurora in pochi clic.</p>
+        <a href="/exhibitions" class="btn-brand btn-primary" style="background-color: var(--brand-light); color: var(--brand-terracotta); font-size: 1.2rem; padding: 1rem 2rem;">
+            Scopri le mostre in corso
+        </a>
+    </div>
+
+    <div class="features-grid">
+        <div class="feature-card card-opere">
+            <h3>Opere permanenti</h3>
+            <p>Sfoglia il catalogo digitale per scoprire i dettagli, gli autori e le tecniche esposte.</p>
+            <a href="/artworks" class="card-link">Vai alle opere &rarr;</a>
+        </div>
+
+        <div class="feature-card card-tour">
+            <h3>Tour guidati</h3>
+            <p>Vivi l'arte con i nostri esperti. Controlla le disponibilità e riserva il tuo posto online.</p>
+            <a href="/guidedtours" class="card-link">Prenota un tour &rarr;</a>
+        </div>
+    </div>
+}
+
+@code {
+    [CascadingParameter(Name = "AdminState")]
+    public bool IsAdmin { get; set; }
+}

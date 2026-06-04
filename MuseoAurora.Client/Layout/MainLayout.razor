@@ -1,15 +1,29 @@
 ﻿@inherits LayoutComponentBase
 
-<div class="page">
-    <NavMenu />
+<CascadingValue Value="IsAdmin" Name="AdminState">
+    <div class="page">
+        <NavMenu IsAdmin="IsAdmin" OnToggleClicked="ToggleAdminMode" />
 
-    <main>
-        @Body
-    </main>
-</div>
+        <main>
+            @Body
+        </main>
+    </div>
+</CascadingValue>
 
 <div id="blazor-error-ui" data-nosnippet>
     An unhandled error has occurred.
     <a href="." class="reload">Reload</a>
     <span class="dismiss">🗙</span>
 </div>
+
+@code {
+    public bool IsAdmin { get; set; } = false;
+
+    private void ToggleAdminMode()
+    {
+        IsAdmin = !IsAdmin;
+        StateHasChanged();
+    }
+}
+
+
