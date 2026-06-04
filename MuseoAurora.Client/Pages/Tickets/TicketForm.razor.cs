@@ -14,6 +14,7 @@ namespace MuseoAurora.Client.Pages.Tickets
         [Inject] public ExhibitionProxyService ExhibitionService { get; set; } = default!;
         [Inject] public GuidedTourProxyService GuidedTourService { get; set; } = default!;
         [Inject] public NavigationManager NavManager { get; set; } = default!;
+        [CascadingParameter(Name = "AdminState")] public bool IsAdmin { get; set; }
 
         [Parameter] public int? Id { get; set; }
 
@@ -59,7 +60,14 @@ namespace MuseoAurora.Client.Pages.Tickets
 
             if (success)
             {
-                NavManager.NavigateTo("/tickets");
+                if (IsAdmin)
+                {
+                    NavManager.NavigateTo("/tickets");
+                }
+                else
+                {
+                    NavManager.NavigateTo("/exhibitions");
+                }
             }
         }
     }

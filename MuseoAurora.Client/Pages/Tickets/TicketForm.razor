@@ -61,5 +61,12 @@
     </div>
 
     <button type="submit" class="btn-brand btn-save">Salva</button>
-    <a href="/tickets" class="btn-brand btn-cancel">Annulla</a>
+    @if (IsAdmin)
+    {
+        <a href="/tickets" class="btn-brand btn-cancel">Annulla</a>
+    }
+    else
+    {
+        <a href="/exhibitions" class="btn-brand btn-cancel">Annulla</a>
+    }
 </EditForm>
