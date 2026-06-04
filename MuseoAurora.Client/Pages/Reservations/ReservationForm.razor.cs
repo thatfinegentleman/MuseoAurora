@@ -52,7 +52,14 @@ namespace MuseoAurora.Client.Pages.Reservations
 
             if (success)
             {
-                NavManager.NavigateTo("/reservations");
+                if (IsAdmin)
+                {
+                    NavManager.NavigateTo("/reservations");
+                }
+                else
+                {
+                    NavManager.NavigateTo("/guidedtours");
+                }
             }
         }
     }

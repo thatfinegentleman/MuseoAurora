@@ -1,6 +1,6 @@
 ﻿@page "/visitors/create"
 @page "/visitors/edit/{Id:int}"
-
+<PageTitle>@(Id.HasValue ? "Modifica visitatore" : "Crea visitatore") - Museo Civico Aurora</PageTitle>
 <h3>@(Id.HasValue ? "Modifica visitatore" : "Crea visitatore")</h3>
 
 <EditForm Model="visitor" OnValidSubmit="HandleSubmit">

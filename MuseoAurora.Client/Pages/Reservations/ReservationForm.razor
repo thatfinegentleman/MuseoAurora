@@ -1,6 +1,6 @@
 ﻿@page "/reservations/create"
 @page "/reservations/edit/{Id:int}"
-
+<PageTitle>@(Id.HasValue ? "Modifica prenotazione" : "Crea prenotazione") - Museo Civico Aurora</PageTitle>
 <h3>@(Id.HasValue ? "Modifica prenotazione" : "Crea prenotazione")</h3>
 
 <EditForm Model="reservation" OnValidSubmit="HandleSubmit">
@@ -42,7 +42,14 @@
         <label>Status</label>
         <InputText class="input-brand" @bind-Value="reservation.Status" />
     </div>
-
+    
     <button type="submit" class="btn-brand btn-save">Salva</button>
-    <a href="/reservations" class="btn-brand btn-cancel">Annulla</a>
-</EditForm>
+    @if (IsAdmin)
+    {
+        <a href="/reservations" class="btn-brand btn-cancel">Annulla</a>
+    }
+    else
+    {
+        <a href="/guidedtours" class="btn-brand btn-cancel">Annulla</a>
+    }
+    </EditForm>

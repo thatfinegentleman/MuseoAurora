@@ -1,5 +1,5 @@
 ﻿@page "/reservations"
-
+<PageTitle>Prenotazioni - Museo Civico Aurora</PageTitle>
 <h3>Prenotazioni</h3>
 
 <a href="/reservations/create" class="btn-brand btn-primary mb-3">Aggiungi prenotazione</a>
@@ -13,6 +13,8 @@ else
     <table class="table-brand">
         <thead>
             <tr>
+                <th>Visitatore</th>
+                <th>Visita guidata</th>
                 <th>Data</th>
                 <th>Partecipanti</th>
                 <th>Status</th>
@@ -26,6 +28,8 @@ else
             @foreach (var item in reservations)
             {
                 <tr>
+                    <td>@item.Visitor.FirstName @item.Visitor.LastName</td>
+                    <td>@item.GuidedTour.Title</td>
                     <td>@item.ReservationDate?.ToShortDateString()</td>
                     <td>@item.ParticipantsCount</td>
                     <td>@item.Status</td>

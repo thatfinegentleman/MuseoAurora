@@ -1,6 +1,6 @@
 ﻿@page "/artworks/create"
 @page "/artworks/edit/{Id:int}"
-
+<PageTitle>@(Id.HasValue ? "Modifica opera d'arte" : "Crea opera d'arte") - Museo Civico Aurora</PageTitle>
 <h3>@(Id.HasValue ? "Modifica opera d'arte" : "Crea opera d'arte")</h3>
 
 <EditForm Model="artwork" OnValidSubmit="HandleSubmit">

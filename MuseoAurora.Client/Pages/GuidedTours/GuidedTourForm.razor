@@ -1,6 +1,6 @@
 ﻿@page "/guidedtours/create"
 @page "/guidedtours/edit/{Id:int}"
-
+<PageTitle>@(Id.HasValue ? "Modifica tour guidato" : "Crea tour guidato") - Museo Civico Aurora</PageTitle>
 <h3>@(Id.HasValue ? "Modifica tour guidato" : "Crea tour guidato")</h3>
 
 <EditForm Model="tour" OnValidSubmit="HandleSubmit">

@@ -1,6 +1,6 @@
 ﻿@page "/exhibitions/create"
 @page "/exhibitions/edit/{Id:int}"
-
+<PageTitle>@(Id.HasValue ? "Modifica mostra" : "Crea mostra") - Museo Civico Aurora</PageTitle>
 <h3>@(Id.HasValue ? "Modifica mostra" : "Crea mostra")</h3>
 
 <EditForm Model="exhibition" OnValidSubmit="HandleSubmit">

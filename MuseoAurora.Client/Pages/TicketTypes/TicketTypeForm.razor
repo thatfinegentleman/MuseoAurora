@@ -1,6 +1,6 @@
 ﻿@page "/tickettypes/create"
 @page "/tickettypes/edit/{Id:int}"
-
+<PageTitle>@(Id.HasValue ? "Modifica tipo di biglietto" : "Crea tipo di biglietto") - Museo Civico Aurora</PageTitle>
 <h3>@(Id.HasValue ? "Modifica tipo di biglietto" : "Crea tipo di biglietto")</h3>
 
 <EditForm Model="ticketType" OnValidSubmit="HandleSubmit">
@@ -16,8 +16,6 @@
         <InputNumber class="input-brand" @bind-Value="ticketType.Price" />
     </div>
 
-    <button type="submit" 
-        >Salva</button>
-    <a href="/tickettypes" 
-    >Annulla</a>
+    <button type="submit" class="btn-brand btn-save">Salva</button>
+    <a href="/tickets" class="btn-brand btn-cancel">Annulla</a>
 </EditForm>

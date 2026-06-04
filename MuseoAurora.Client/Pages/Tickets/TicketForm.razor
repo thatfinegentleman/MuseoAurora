@@ -1,6 +1,6 @@
 ﻿@page "/tickets/create"
 @page "/tickets/edit/{Id:int}"
-
+<PageTitle>@(Id.HasValue ? "Modifica biglietto" : "Crea biglietto") - Museo Civico Aurora</PageTitle>
 <h3>@(Id.HasValue ? "Modifica biglietto" : "Crea biglietto")</h3>
 
 <EditForm Model="ticket" OnValidSubmit="HandleSubmit">
@@ -18,7 +18,7 @@
     </div>
 
     <div class="mb-3">
-        <label>Ticket Type</label>
+        <label>Tipo di biglietto</label>
         <InputSelect class="input-brand" @bind-Value="ticket.TicketType.Id">
             <option value="0">Seleziona un tipo di biglietto...</option>
             @foreach (var t in availableTicketTypes)

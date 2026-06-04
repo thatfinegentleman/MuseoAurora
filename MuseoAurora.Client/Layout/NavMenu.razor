@@ -19,6 +19,12 @@
                 <li class="nav-item">
                     <NavLink class="nav-link" href="guidedtours">Tour guidati</NavLink>
                 </li>
+                @if (!IsAdmin)
+                {
+                    <li class="nav-item">
+                        <NavLink class="nav-link" href="contact">Contatti</NavLink>
+                    </li>
+                }
                 @if (IsAdmin)
                 {
                     <li class="nav-item">
