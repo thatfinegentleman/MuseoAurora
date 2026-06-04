@@ -200,7 +200,7 @@ main {
 }
 
     .table-brand th, .table-brand td {
-        padding: 1rem;
+        padding: 0.5rem;
         text-align: left;
         border-bottom: 1px solid #e0e0e0;
     }

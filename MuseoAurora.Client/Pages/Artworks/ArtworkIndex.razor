@@ -29,6 +29,7 @@ else
                     <th>Nome</th>
                     <th>Autore</th>
                     <th>Anno</th>
+                    <th>Mostra</th>
                     <th>Azioni</th>
                 </tr>
             </thead>
@@ -39,6 +40,7 @@ else
                         <td>@item.Title</td>
                         <td>@item.Author</td>
                         <td>@item.Year</td>
+                        <td>@item.Exhibition.Title</td>
                         <td>
                             <a href="/artworks/edit/@item.Id" class="btn-brand btn-edit">Modifica</a>
                             <button class="btn-brand btn-delete" @onclick="() => Delete(item.Id)">Elimina</button>
@@ -61,6 +63,7 @@ else
                     <h4>@item.Title</h4>
                     <p><strong>Autore:</strong> @item.Author</p>
                     <p><strong>Anno di realizzazione:</strong> @(item.Year?.ToString() ?? "Sconosciuto")</p>
+                    <p><strong>Mostra:</strong> @item.Exhibition.Title</p>
                 </div>
             }
         </div>
