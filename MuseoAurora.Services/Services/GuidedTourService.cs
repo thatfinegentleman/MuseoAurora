@@ -60,7 +60,18 @@ namespace MuseoAurora.Services
                     FROM guided_tours gt INNER JOIN exhibitions e ON gt.exhibition_id = e.id
                     WHERE gt.id = @Id
                     """;
-            return await connection.QueryFirstOrDefaultAsync<GuidedTour>(query, new { Id = id });
+            var tours = await connection.QueryAsync<GuidedTour, Exhibition, GuidedTour>(
+                query,
+                (guidedTour, exhibition) =>
+                {
+                    guidedTour.Exhibition = exhibition;
+                    return guidedTour;
+                },
+                new { Id = id },
+                splitOn: "id"
+            );
+
+            return tours.FirstOrDefault();
         }
 
         public async Task<InsertResult<GuidedTour>> CreateGuidedTourAsync(GuidedTour tour)
