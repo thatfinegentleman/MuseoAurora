@@ -32,6 +32,11 @@
         <InputNumber class="input-brand" @bind-Value="artwork.Year" />
     </div>
 
+    <div class="mb-3">
+        <label>Url immagine (opzionale)</label>
+        <InputText class="input-brand" @bind-Value="artwork.ImageUrl" />
+    </div>
+
     <button type="submit" class="btn-brand btn-save">Salva</button>
     <a href="/artworks" class="btn-brand btn-cancel">Annulla</a>
 </EditForm>
