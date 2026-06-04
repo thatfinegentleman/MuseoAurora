@@ -18,7 +18,7 @@ namespace MuseoAurora.Models
         public DateTime? PurchaseDate { get; set; } = DateTime.Now;
         public Visitor Visitor { get; set; } = new Visitor();
         public TicketType TicketType { get; set; } = new TicketType();
-        public Exhibition Exhibition { get; set; } = new Exhibition();
-        public GuidedTour GuidedTour { get; set; } = new GuidedTour();
+        public Exhibition? Exhibition { get; set; } = new Exhibition();
+        public GuidedTour? GuidedTour { get; set; } = new GuidedTour();
     }
 }

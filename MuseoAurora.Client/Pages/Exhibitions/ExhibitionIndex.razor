@@ -56,6 +56,10 @@ else
             @foreach (var item in exhibitions)
             {
                 <div class="data-card">
+                    @if (!string.IsNullOrEmpty(item.ImageUrl))
+                    {
+                        <img src="@item.ImageUrl" alt="@item.Title" class="card-img" />
+                    }
                     <h4>@item.Title</h4>
                     <p><strong>Inizio:</strong> @item.StartDate?.ToShortDateString()</p>
                     <p><strong>Fine:</strong> @item.EndDate?.ToShortDateString()</p>

@@ -57,6 +57,10 @@ else
             @foreach (var item in tours)
             {
                 <div class="data-card">
+                    @if (!string.IsNullOrEmpty(item.ImageUrl))
+                    {
+                        <img src="@item.ImageUrl" alt="@item.Title" class="card-img" />
+                    }
                     <h4>@item.Title</h4>
                     <p><strong>Orario:</strong> @item.StartTime</p>
                     <p><strong>Durata:</strong> @item.DurationMinutes minuti</p>

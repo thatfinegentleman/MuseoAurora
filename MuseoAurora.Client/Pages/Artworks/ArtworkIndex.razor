@@ -54,6 +54,10 @@ else
             @foreach (var item in artworks)
             {
                 <div class="data-card">
+                    @if (!string.IsNullOrEmpty(item.ImageUrl))
+                    {
+                        <img src="@item.ImageUrl" alt="@item.Title" class="card-img" />
+                    }
                     <h4>@item.Title</h4>
                     <p><strong>Autore:</strong> @item.Author</p>
                     <p><strong>Anno di realizzazione:</strong> @(item.Year?.ToString() ?? "Sconosciuto")</p>
